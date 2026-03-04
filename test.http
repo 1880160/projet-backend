@@ -1,0 +1,46 @@
+###
+# @name all-users
+GET http://0.0.0.0:3000/users
+
+###
+
+###
+# @name create-user
+POST http://0.0.0.0:3000/users HTTP/1.1
+Content-Type: application/json 
+
+{
+    "name" : "uwuw",
+    "email" : "uwu@gmail.com",
+    "password" : "Word&Uwu1819"
+}
+
+
+
+
+
+
+###
+# @name login
+POST http://0.0.0.0:3000/users/sign-in HTTP/1.1
+Content-Type: application/json 
+
+{
+    "name" : "uwuw",
+    "password" : "Word&Uwu1819"
+}
+
+###
+# @name unauthorized-access
+GET  http://0.0.0.0:3000/users/my-info HTTP/1.1
+
+###
+# @name access
+@jwtToken = {{login.response.body.access_token}}
+
+GET  http://0.0.0.0:3000/users/my-info HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+
+
+
+
