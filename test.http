@@ -3,6 +3,10 @@
 GET http://0.0.0.0:3000/users
 
 ###
+# @name get-id
+GET http://0.0.0.0:3000/users/1 HTTP/1.1
+
+
 
 ###
 # @name create-user

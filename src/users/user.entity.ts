@@ -1,5 +1,6 @@
 import { AfterInsert, Column, Entity, PrimaryGeneratedColumn,  } from "typeorm";
 import { Exclude } from "class-transformer";
+import { IsBoolean } from "class-validator";
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
@@ -15,6 +16,12 @@ export class User {
     @Column()
     @Exclude()
     password : String
+
+    @Exclude()
+    @Column({default : false})
+    @IsBoolean()
+    admin : boolean
+
 
     @AfterInsert()
     logInsert(){

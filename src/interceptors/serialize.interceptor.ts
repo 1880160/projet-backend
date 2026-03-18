@@ -9,7 +9,11 @@ import { UseInterceptors } from '@nestjs/common';
 interface ClassConstructor{ // force interface
   new (...args : any[]) : {};
 }
-
+/**
+ * Serilize to dto
+ * @param dto 
+ * @returns 
+ */
 export function Serialize(dto : ClassConstructor){ // create a Decorator
   return UseInterceptors(new LoggingInterceptor(dto)) 
 }

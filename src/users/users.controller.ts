@@ -5,6 +5,8 @@ import { CreateUserDto, PublicResponseUserDTO, SignInUserDTO } from './user.dto'
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
+import { UserParam } from './user.decorator';
+import { AdminGuard } from './auth/admin.guard';
 
 @Controller('users')
 export class UsersController {
@@ -18,10 +20,10 @@ export class UsersController {
     return await this.authService.signIn(signInInfos.name,signInInfos.password);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard,AdminGuard)
   @Get("/my-info")
-  async getProfile(@Request() req){
-    return req.user;
+  async getProfile(@UserParam() wuwu ){
+    return wuwu;
   }
 
 
@@ -29,14 +31,14 @@ export class UsersController {
   async findAll() : Promise<User[]>{
     return await this.usersService.findAll();
   }
-  @Post()
+  @Post("/sign-up")
   async create(@Body() CreateUserDto : CreateUserDto) : Promise<User>{
     return await this.usersService.create(CreateUserDto)
   }
   
   @Serialize(PublicResponseUserDTO) // custom decorator
   @Get("/:id")
-  async findUser(@Param("id") userId : number) : Promise<User | String>{
+  async findUser(@Param("id") userId : number, @Request() uwu) : Promise<User | String>{
     return this.usersService.findOne(userId);
   }
 
