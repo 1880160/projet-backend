@@ -3,7 +3,8 @@ import { Injectable, CanActivate, ExecutionContext, LoggerService, InternalServe
 import { Observable } from 'rxjs';
 import { UsersService } from '../users.service';
 import { Logger } from '@nestjs/common';
-import { User } from '../user.entity';
+import { User } from '../user/user.entity';
+import { UserRole } from '../user/user-role/user-roles.enum';
 @Injectable()
 export class AdminGuard implements CanActivate {
      private readonly logger = new Logger(AdminGuard.name, { timestamp: true });
@@ -27,7 +28,7 @@ export class AdminGuard implements CanActivate {
     throw new BadRequestException(internalUser)
    }
 
-   if (!internalUser.admin) {return false}
+   if (internalUser.userType == UserRole.USER) {return false}
     return true;
   }
 }

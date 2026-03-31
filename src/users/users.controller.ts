@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Post, Param, UseInterceptors, ClassSerializerInterceptor, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.entity';
-import { CreateUserDto, PublicResponseUserDTO, SignInUserDTO } from './user.dto';
+import { User } from './user/user.entity';
+import { CreateUserDto, PublicResponseUserDTO, SignInUserDTO } from './user/user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
-import { UserParam } from './user.decorator';
+import { UserParam } from './user/user.decorator';
 import { AdminGuard } from './auth/admin.guard';
 
 @Controller('users')
@@ -17,23 +17,23 @@ export class UsersController {
 
   @Post("/sign-in")
   async signIn(@Body() signInInfos : SignInUserDTO ) : Promise<{ access_token: string }> {
-    return await this.authService.signIn(signInInfos.name,signInInfos.password);
+    return await this.authService.signIn(signInInfos.username,signInInfos.password);
+  }
+
+  @UseGuards(AuthGuard)
+  @Get("/my-info")
+  async getProfile(@UserParam() user ){
+    return user;
   }
 
   @UseGuards(AuthGuard,AdminGuard)
-  @Get("/my-info")
-  async getProfile(@UserParam() wuwu ){
-    return wuwu;
-  }
-
-
   @Get()
   async findAll() : Promise<User[]>{
-    return await this.usersService.findAll();
+    return await this.usersService.getAllUsers();
   }
   @Post("/sign-up")
   async create(@Body() CreateUserDto : CreateUserDto) : Promise<User>{
-    return await this.usersService.create(CreateUserDto)
+    return await this.authService.signUp(CreateUserDto);
   }
   
   @Serialize(PublicResponseUserDTO) // custom decorator

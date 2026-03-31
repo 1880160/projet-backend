@@ -7,7 +7,7 @@ export class CreateUserDto {
 
     @IsString()
     @IsNotEmpty()
-    name : String
+    username : String
 
 
     @IsEmail()
@@ -21,7 +21,7 @@ export class CreateUserDto {
 export class UpdateUserDto {
 
     @IsString()
-    name : String
+    username : String
 
 
     @IsEmail()
@@ -33,7 +33,7 @@ export class UpdateUserDto {
 }
 export class SignInUserDTO {
     @IsString()
-    name : String
+    username : String
 
     @IsString()
     password: String

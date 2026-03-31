@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users.service';
 import { randomBytes, scrypt as _scrypt, hash } from 'crypto'; // Pour générer notre salt
 import { promisify } from 'util';
-import { CreateUserDto } from '../user.dto';
+import { CreateUserDto } from '../user/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { BadRequestException } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
@@ -33,7 +33,7 @@ export class AuthService {
             throw new UnauthorizedException()
         }
 
-    const payload = { sub: user.id, username: user.name };
+    const payload = { sub: user.userId, username: user.username };
     return {
       // 💡 Here the JWT secret key that's used for signing the payload 
       // is the key that was passsed in the JwtModule
@@ -41,15 +41,13 @@ export class AuthService {
     }
     }
 
-
-//     async signOut() {
-//     return "uwuw out"
-// }
-    async singUp(createUserDto : CreateUserDto){
-    if (this.usersService.findByName(createUserDto.name) != null) {
+    async signUp(createUserDto : CreateUserDto){
+        const similarUser = await this.usersService.findByName(createUserDto.username)
+    this.logger.log(similarUser,this);
+        if (  similarUser != null) {
         throw new BadRequestException("Already an user with this name");
     }
-    return this.usersService.create(createUserDto);
+    return await this.usersService.createUser(createUserDto);
 
 }
 }

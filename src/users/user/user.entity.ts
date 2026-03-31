@@ -1,13 +1,14 @@
 import { AfterInsert, Column, Entity, PrimaryGeneratedColumn,  } from "typeorm";
 import { Exclude } from "class-transformer";
-import { IsBoolean } from "class-validator";
+import { IsBoolean, IsEnum } from "class-validator";
+import { UserRole } from "./user-role/user-roles.enum";
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id : number;
+    userId : number;
 
     @Column()
-    name : String
+    username : String
 
 
     @Column()
@@ -18,13 +19,12 @@ export class User {
     password : String
 
     @Exclude()
-    @Column({default : false})
-    @IsBoolean()
-    admin : boolean
-
+    @Column({default : UserRole.USER})
+    @IsEnum(UserRole)
+    userType : UserRole
 
     @AfterInsert()
     logInsert(){
-        console.log(`User with ID ${this.id} has been created`)
+        console.log(`User with ID ${this.userId} has been created`)
     }
 }

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
+import { User } from './user/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { CreateUserDto, UpdateUserDto } from './user/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,24 +13,24 @@ export class UsersService {
         private userRepository : Repository<User>,
     ){}
 
-    async findAll(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
         return this.userRepository.find();
   }
 
-  async findOne(id: number): Promise<User | String> {
-    return this.userRepository.findOneByOrFail({ id }).catch(
+  async findOne(userId: number): Promise<User | String> {
+    return this.userRepository.findOneByOrFail({ userId }).catch(
       () => {
-        const message : String =  `couldn't find user with id ${id}`;
+        const message : String =  `couldn't find user with id ${userId}`;
         this.logger.warn(message, this);
         return message;
       }
     );
   }
-  async findByName(name : String) : Promise<User | null>{
-    return this.userRepository.findOneByOrFail({name}).catch(
+  async findByName(username : String) : Promise<User | null>{
+    return this.userRepository.findOneByOrFail({ username }).catch(
       () =>
       {
-        const message : String =  `couldn't find user with name :  ${name}`;
+        const message : String =  `couldn't find user with name :  ${username}`;
         this.logger.warn(message, this)
         return null;
       }
@@ -38,17 +38,19 @@ export class UsersService {
   }
 
 
-  async create( createUserDto: CreateUserDto) : Promise<User>{
+  async createUser( createUserDto: CreateUserDto) : Promise<User>{
     const newUser : User = this.userRepository.create(createUserDto);
     await this.userRepository.save(newUser);
     return newUser;
   }
 
-  async update(id : number, attrs: Partial<UpdateUserDto>) : Promise<User | String> {
-    const user : User | String = await this.findOne(id);
-    if (typeof user === "string"){
-      return user
-    }
-    return "";
-  } 
+
+  async updateUser(userId: number, updateUserDto: Partial<UpdateUserDto>) {
+    return this.userRepository.update(userId,updateUserDto)
+  }
+
+  async deleteUser(id: number) {
+    return this.userRepository.delete({userId : id})
+  }
+
 }
