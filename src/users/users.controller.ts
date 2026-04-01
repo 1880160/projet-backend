@@ -19,6 +19,11 @@ export class UsersController {
   async signIn(@Body() signInInfos : SignInUserDTO ) : Promise<{ access_token: string }> {
     return await this.authService.signIn(signInInfos.username,signInInfos.password);
   }
+  @UseGuards(AuthGuard)
+  @Get("/refresh-login")
+  async refreshLogin(@UserParam() user) : Promise<{ access_token: string }> {
+    return await this.authService.refreshToken(user.sub);
+  }
 
   @UseGuards(AuthGuard)
   @Get("/my-info")
@@ -36,7 +41,8 @@ export class UsersController {
     return await this.authService.signUp(CreateUserDto);
   }
   
-  @Serialize(PublicResponseUserDTO) // custom decorator
+  @Serialize(PublicResponseUserDTO)
+  @UseGuards(AuthGuard,AdminGuard) // custom decorator
   @Get("/:id")
   async findUser(@Param("id") userId : number, @Request() uwu) : Promise<User | String>{
     return this.usersService.findOne(userId);
