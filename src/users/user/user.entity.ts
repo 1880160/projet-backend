@@ -1,7 +1,8 @@
-import { AfterInsert, Column, Entity, PrimaryGeneratedColumn,  } from "typeorm";
+import { AfterInsert, BeforeInsert, BeforeUpdate, AfterUpdate, Column, Entity, PrimaryGeneratedColumn,  } from "typeorm";
 import { Exclude } from "class-transformer";
 import { IsBoolean, IsEnum } from "class-validator";
 import { UserRole } from "./user-role/user-roles.enum";
+import { hashPassword } from "./hashing/user.hash";
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
@@ -26,5 +27,13 @@ export class User {
     @AfterInsert()
     logInsert(){
         console.log(`User with ID ${this.userId} has been created`)
+    }
+    @BeforeInsert()
+    beforeInsert() {
+        this.password = hashPassword(this.password)
+    }
+    @AfterUpdate()
+    afterUpdater() {
+        this.password = hashPassword(this.password)
     }
 }

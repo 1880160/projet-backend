@@ -1,8 +1,9 @@
 
 ###
 # @name get-id
+@jwtToken = {{login.response.body.access_token}}
 GET http://0.0.0.0:3000/users/1 HTTP/1.1
-
+Authorization: Bearer {{jwtToken}}
 
 
 ###
@@ -30,6 +31,34 @@ Content-Type: application/json
     "username" : "uwuw",
     "password" : "Word&Uwu1819"
 }
+
+
+###
+# @name update-user
+@jwtToken = {{login.response.body.access_token}}
+PATCH http://0.0.0.0:3000/users/1 HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json 
+
+{
+    "username" : "uwuw",
+    "email" : "uwuw@workout.com",
+    "userType" : 1
+}
+
+###
+# @name delete-user
+@jwtToken = {{login.response.body.access_token}}
+DELETE http://0.0.0.0:3000/users/1 HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+
+
+### 
+# @name refresh-login
+@jwtToken = {{login.response.body.access_token}}
+GET http://0.0.0.0:3000/users/refresh-login
+Authorization: Bearer {{jwtToken}}
+
 
 ###
 # @name all-users

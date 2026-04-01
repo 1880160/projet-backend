@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Param, UseInterceptors, ClassSerializerInterceptor, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Patch,Delete, UseInterceptors, ClassSerializerInterceptor, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User } from './user/user.entity';
-import { CreateUserDto, PublicResponseUserDTO, SignInUserDTO } from './user/user.dto';
+import { CreateUserDto, PublicResponseUserDTO, SignInUserDTO, UpdateUserDto } from './user/user.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
@@ -42,11 +42,23 @@ export class UsersController {
   }
   
   @Serialize(PublicResponseUserDTO)
-  @UseGuards(AuthGuard,AdminGuard) // custom decorator
+  @UseGuards(AuthGuard,AdminGuard)
   @Get("/:id")
   async findUser(@Param("id") userId : number, @Request() uwu) : Promise<User | String>{
     return this.usersService.findOne(userId);
   }
+
+  @UseGuards(AuthGuard) /*missing admin guard for testing purposes */
+  @Patch(':id')
+  async update(@Param('id') id: string, @Body() updateUserDto:  Partial<UpdateUserDto> ) {
+    return await this.usersService.updateUser(+id, updateUserDto);
+  }
+  @UseGuards(AuthGuard,AdminGuard)
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    return await this.usersService.deleteUser(+id);
+  }
+
 
 
 }

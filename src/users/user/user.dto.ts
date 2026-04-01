@@ -1,39 +1,38 @@
 import { Injectable } from "@nestjs/common";
 import { Expose } from "class-transformer";
-import { IsEmail, IsNotEmpty, IsNumber, IsString, IsStrongPassword } from "class-validator";
-import { Unique } from "typeorm";
-
+import { IsEmail, IsNotEmpty, IsEnum, IsNumber, IsString, IsStrongPassword } from "class-validator";
+import bcrypt from "bcryptjs";
+import { BeforeInsert, Unique } from "typeorm";
+import {hashPassword} from "./hashing/user.hash";
+import { PartialType } from "@nestjs/mapped-types";
+import { UserRole } from "./user-role/user-roles.enum";
 export class CreateUserDto {
 
     @IsString()
     @IsNotEmpty()
-    username : String
+    username: string
 
 
     @IsEmail()
-    email : String
+    email: string
 
     @IsStrongPassword()
     @IsNotEmpty()
-    password: String
+    password: string
+
+
+
 }
 
-export class UpdateUserDto {
+export class UpdateUserDto extends PartialType(CreateUserDto) {
 
-    @IsString()
-    username : String
+    @IsEnum(UserRole)
+    userType : UserRole
 
-
-    @IsEmail()
-    email : String
-
-    @IsStrongPassword()
-    password: String
-    
 }
 export class SignInUserDTO {
     @IsString()
-    username : String
+    username: String
 
     @IsString()
     password: String
@@ -42,7 +41,7 @@ export class SignInUserDTO {
 
 export class PublicResponseUserDTO {
     @Expose()
-    id : number
+    id: number
     @Expose()
-    email : string
+    email: string
 }

@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users.service';
-import { randomBytes, scrypt as _scrypt, hash } from 'crypto'; // Pour générer notre salt
 import { promisify } from 'util';
 import { CreateUserDto } from '../user/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { BadRequestException } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
-const scrypt = promisify(_scrypt);
-
+import bcrypt from 'bcryptjs';
+import { hashPassword } from '../user/hashing/user.hash';
+const saltRounds = 10;
 
 @Injectable()
 export class AuthService {
@@ -28,7 +28,7 @@ export class AuthService {
             throw new BadRequestException(`cannot find name : ${username}`,)
         }
 
-        if (user?.password !== password){
+        if (user?.password !== hashPassword(password)){
             this.logger.warn(`${password}`)
             throw new UnauthorizedException()
         }
