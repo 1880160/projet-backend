@@ -1,0 +1,82 @@
+
+###
+# @name get-id
+@jwtToken = {{login.response.body.access_token}}
+GET http://0.0.0.0:3000/users/1 HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+
+
+###
+# @name create-user
+POST http://0.0.0.0:3000/users/sign-up HTTP/1.1
+Content-Type: application/json 
+
+{
+    "username" : "uwuw",
+    "email" : "uwu@gmail.com",
+    "password" : "Word&Uwu1819"
+}
+
+
+
+
+
+
+###
+# @name login
+POST http://0.0.0.0:3000/users/sign-in HTTP/1.1
+Content-Type: application/json 
+
+{
+    "username" : "uwuw",
+    "password" : "Word&Uwu1819"
+}
+
+
+###
+# @name update-user
+@jwtToken = {{login.response.body.access_token}}
+PATCH http://0.0.0.0:3000/users/1 HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+Content-Type: application/json 
+
+{
+    "username" : "uwuw",
+    "email" : "uwuw@workout.com",
+    "userType" : 1
+}
+
+###
+# @name delete-user
+@jwtToken = {{login.response.body.access_token}}
+DELETE http://0.0.0.0:3000/users/1 HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+
+
+### 
+# @name refresh-login
+@jwtToken = {{login.response.body.access_token}}
+GET http://0.0.0.0:3000/users/refresh-login
+Authorization: Bearer {{jwtToken}}
+
+
+###
+# @name all-users
+@jwtToken = {{login.response.body.access_token}}
+GET http://0.0.0.0:3000/users
+Authorization: Bearer {{jwtToken}}
+
+###
+# @name unauthorized-access
+GET  http://0.0.0.0:3000/users/my-info HTTP/1.1
+
+###
+# @name access
+@jwtToken = {{login.response.body.access_token}}
+
+GET  http://0.0.0.0:3000/users/my-info HTTP/1.1
+Authorization: Bearer {{jwtToken}}
+
+
+
+
