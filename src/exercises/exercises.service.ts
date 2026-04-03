@@ -4,6 +4,7 @@ import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ILike } from 'typeorm';
 @Injectable()
 export class ExercisesService {
 
@@ -13,35 +14,28 @@ export class ExercisesService {
       ){}
 
 
-  createExercise(createExerciseDto: CreateExerciseDto) {
-    return 'This action adds a new exercise';
+  async createExercise(createExerciseDto: CreateExerciseDto) {
+    const newExercise = this.exerciseRepository.create(createExerciseDto);
+    return this.exerciseRepository.save(newExercise);
   }
 
-  findAll(name : string, muscleGroup : string) {
-    return this.exerciseRepository.createQueryBuilder()
-    .select()
-    .from(Exercise,"exercise")
-    .where("exercise.name = %:exerciseName%")
-    .orWhere("Exercise.primaryMuscles = %:muscleGroup%")
-    .setParameters({
-      "exerciseName" : name,
-      "muscleGroup" : muscleGroup
-    });
+  async findAll(name : string, muscleGroup : string, secondaryMuscleGroup) {
+    name = name ? name : "";
+    muscleGroup = muscleGroup ? muscleGroup : "";
+    secondaryMuscleGroup = secondaryMuscleGroup ? secondaryMuscleGroup : "";
+    return await this.exerciseRepository.findBy({name : ILike(`%${name}%`), primaryMuscles : ILike(`%${muscleGroup}%`), secondaryMuscles : ILike(`%${secondaryMuscleGroup}%`)})
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} exercise`;
-  }
-  getAllExerciseFilteredBy(){
-
+  async findOne(id: number) {
+    return this.exerciseRepository.findOneBy({exerciseId : id})
   }
 
-  updateExercise(id: number, updateExerciseDto: UpdateExerciseDto) {
-    return `This action updates a #${id} exercise`;
+  async updateExercise(id: number, updateExerciseDto: Partial<UpdateExerciseDto>) {
+    this.exerciseRepository.update({exerciseId : id},updateExerciseDto)
   }
 
-  deleteExercise(id: number) {
-    return `This action removes a #${id} exercise`;
+  async deleteExercise(id: number) {
+    this.exerciseRepository.delete({exerciseId : id});
   }
 
   

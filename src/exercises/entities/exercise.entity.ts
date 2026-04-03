@@ -1,9 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
 
 @Entity()
+@Unique('exercise_unique_constraints',['name'])
 export class Exercise {
     @PrimaryGeneratedColumn()
     exerciseId : number
+
     @Column()
     name : string;
 
@@ -31,5 +33,4 @@ export class Exercise {
     @Column()
     category : string
 
-    /*image*/ // for feature integration
 }

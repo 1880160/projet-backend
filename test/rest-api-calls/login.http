@@ -1,25 +1,20 @@
+//this file was written with httpYac syntax
+
 
 ###
 # @name get-id
-@jwtToken = {{login.response.body.access_token}}
 GET http://0.0.0.0:3000/users/1 HTTP/1.1
-Authorization: Bearer {{jwtToken}}
+Authorization: Bearer {{$global.jwtToken}}
 
 
-###
-# @name create-user
-POST http://0.0.0.0:3000/users/sign-up HTTP/1.1
+# @name make-admin
+PATCH http://0.0.0.0:3000/users/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
 Content-Type: application/json 
 
 {
-    "username" : "uwuw",
-    "email" : "uwu@gmail.com",
-    "password" : "Word&Uwu1819"
+    "userType" : 1
 }
-
-
-
-
 
 
 ###
@@ -32,12 +27,25 @@ Content-Type: application/json
     "password" : "Word&Uwu1819"
 }
 
+{{
+    $global.jwtToken=response.parsedBody.access_token;
+}}
+
+# @name create
+POST http://0.0.0.0:3000/users/sign-up HTTP/1.1
+Content-Type: application/json 
+
+{
+    "username" : "uwuw",
+    "email" : "uwu@gmail.com",
+    "password" : "Word&Uwu1819"
+}
+
 
 ###
 # @name update-user
-@jwtToken = {{login.response.body.access_token}}
 PATCH http://0.0.0.0:3000/users/1 HTTP/1.1
-Authorization: Bearer {{jwtToken}}
+Authorization: Bearer {{$global.jwtToken}}
 Content-Type: application/json 
 
 {
@@ -48,34 +56,34 @@ Content-Type: application/json
 
 ###
 # @name delete-user
-@jwtToken = {{login.response.body.access_token}}
-DELETE http://0.0.0.0:3000/users/1 HTTP/1.1
-Authorization: Bearer {{jwtToken}}
+
+DELETE http://0.0.0.0:3000/user/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
 
 
 ### 
 # @name refresh-login
-@jwtToken = {{login.response.body.access_token}}
+
 GET http://0.0.0.0:3000/users/refresh-login
-Authorization: Bearer {{jwtToken}}
+Authorization: Bearer {{$global.jwtToken}}
 
 
 ###
 # @name all-users
-@jwtToken = {{login.response.body.access_token}}
+
 GET http://0.0.0.0:3000/users
-Authorization: Bearer {{jwtToken}}
+Authorization: Bearer {{$global.jwtToken}}
 
 ###
 # @name unauthorized-access
 GET  http://0.0.0.0:3000/users/my-info HTTP/1.1
 
+
+
 ###
 # @name access
-@jwtToken = {{login.response.body.access_token}}
-
 GET  http://0.0.0.0:3000/users/my-info HTTP/1.1
-Authorization: Bearer {{jwtToken}}
+Authorization: Bearer {{$global.jwtToken}}
 
 
 

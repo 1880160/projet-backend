@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, BadRequestException } from '@nestjs/common';
 import { ExercisesService } from './exercises.service';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
@@ -11,28 +11,31 @@ export class ExercisesController {
   constructor(private readonly exercisesService: ExercisesService) {}
 
   @Post("/create-exercise")
-  create(@Body() createExerciseDto: CreateExerciseDto) {
-    return this.exercisesService.createExercise(createExerciseDto);
+  async create(@Body() createExerciseDto: CreateExerciseDto) {
+    return await this.exercisesService.createExercise(createExerciseDto).catch(() => {
+      throw new BadRequestException('name is already taken')
+  }
+    );
   }
 
   @Get()
-  findAll(@Query('name') name : string, @Query('muscle_group') muscleGroup : string) {
-    return this.exercisesService.findAll(name, muscleGroup);
+  async findAll(@Query('name') name : string, @Query('muscle_group') muscleGroup : string, @Query('secondary_muscle_group') secondaryMuscleGroup : string) {
+    return await this.exercisesService.findAll(name, muscleGroup, secondaryMuscleGroup);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.exercisesService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.exercisesService.findOne(+id);
   }
 
   @Patch('/update-exercise/:id')
-  update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
-    return this.exercisesService.updateExercise(+id, updateExerciseDto);
+  async update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
+    return await this.exercisesService.updateExercise(+id, updateExerciseDto);
   }
 
   @Delete('/delete-exercise/:id')
-  remove(@Param('id') id: string) {
-    return this.exercisesService.deleteExercise(+id);
+  async remove(@Param('id') id: string) {
+    return await this.exercisesService.deleteExercise(+id);
   }
 
   
