@@ -1,0 +1,34 @@
+# @import ./login.http
+
+@route = exercises-request
+
+###
+# @name create-exercise
+POST http://0.0.0.0:3000/{{route}}/create-exercise HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+< ./posts-tests/exercises/one-exercise.json
+
+
+
+###
+# @name find-exercise
+GET http://0.0.0.0:3000/{{route}}/?name=alternate&muscle_group=biceps&secondary_muscle_group=forearms HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
+###
+# @name find-one
+GET http://0.0.0.0:3000/{{route}}/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
+###
+# @name update-exercise
+PATCH http://0.0.0.0:3000/{{route}}/update-exercise/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json 
+< ./posts-tests/exercises/other-exercise.json
+
+###
+# @name delete-exercise
+DELETE http://0.0.0.0:3000/{{route}}/delete-exercise/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}

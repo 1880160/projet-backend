@@ -57,7 +57,7 @@ Content-Type: application/json
 ###
 # @name delete-user
 
-DELETE http://0.0.0.0:3000/user/1 HTTP/1.1
+DELETE http://0.0.0.0:3000/users/1 HTTP/1.1
 Authorization: Bearer {{$global.jwtToken}}
 
 
