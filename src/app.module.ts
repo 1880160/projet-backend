@@ -4,7 +4,9 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user/user.entity';
-
+import { ExercisesModule } from './exercises/exercises.module';
+import { AuthModule } from './users/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [UsersModule,
   TypeOrmModule.forRoot({
@@ -14,8 +16,12 @@ import { User } from './users/user/user.entity';
       autoLoadEntities : true, // autoload entites with forFeature
       synchronize: true,
     }),
+  ExercisesModule,
+
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService,
+
+  ],
 })
 export class AppModule {}
