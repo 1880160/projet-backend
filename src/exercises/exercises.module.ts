@@ -3,6 +3,7 @@ import { ExercisesService } from './exercises.service';
 import { ExercisesController } from './exercises.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Exercise } from './entities/exercise.entity';
+import { ExercisesRequestModule } from './exercises-request/exercises-request.module';
 @Module({
   imports : [TypeOrmModule.forFeature([Exercise])],
   controllers: [ExercisesController],
