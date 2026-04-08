@@ -1,0 +1,30 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/user/user.entity";
+import { Exercise } from "src/exercises/entities/exercise.entity";
+@Entity()
+export class UserExercise {
+@PrimaryGeneratedColumn()
+userExerciseId : number
+
+@Column()
+name : string
+
+@Column()
+weight : number
+
+@Column()
+repetition : number
+
+@Column()
+restTime : number
+
+@Column()
+executionTime : number
+
+@ManyToOne(() => User, (user) => user.userId,{onDelete : "CASCADE"})
+user : User
+
+@ManyToOne(() => Exercise, (exercise) => exercise.exerciseId,{onDelete : "CASCADE"})
+exercise : Exercise
+
+}

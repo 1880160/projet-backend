@@ -9,5 +9,6 @@ import { ExercisesRequestModule } from './exercises-request/exercises-request.mo
   controllers: [ExercisesController],
   providers: [ExercisesService,
   ],
+  exports: [ExercisesService]
 })
 export class ExercisesModule {}

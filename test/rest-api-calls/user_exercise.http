@@ -1,0 +1,44 @@
+# @import ./login.http
+@route = user-exercises
+
+###
+# @name create-exercise
+POST http://0.0.0.0:3000/{{route}}/create-user-exercise HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+< ./posts-tests/user-exercise/one-user_exercise.json
+
+
+###
+# @name find-all
+GET http://0.0.0.0:3000/{{route}}/
+Authorization: Bearer {{$global.jwtToken}}
+
+###
+# @name find-user-all
+GET http://0.0.0.0:3000/{{route}}/my-exercises/?name=e
+Authorization: Bearer {{$global.jwtToken}}
+
+
+
+###
+# @name find-one
+GET http://0.0.0.0:3000/{{route}}/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
+
+
+###
+# @name update-one
+PATCH http://0.0.0.0:3000/{{route}}/update-user-exercise/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+< ./posts-tests/user-exercise/updates/update-one-user_exercise.json
+
+
+
+###
+# @name delete
+DELETE http://0.0.0.0:3000/{{route}}/delete-user-exercise/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
