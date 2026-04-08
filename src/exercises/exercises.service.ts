@@ -5,9 +5,10 @@ import { Exercise } from './entities/exercise.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ILike } from 'typeorm';
+import { Logger } from '@nestjs/common';
 @Injectable()
 export class ExercisesService {
-
+private readonly logger = new Logger(ExercisesService.name, { timestamp: true });
   constructor(
           @InjectRepository(Exercise)
           private exerciseRepository : Repository<Exercise>,
@@ -27,7 +28,13 @@ export class ExercisesService {
   }
 
   async findOne(id: number) {
-    return this.exerciseRepository.findOneBy({exerciseId : id})
+    return this.exerciseRepository.findOneByOrFail({exerciseId : id}).catch(
+      () => {
+        const message : String =  `couldn't find exercise with id : ${id}`;
+        this.logger.warn(message, this);
+        return message;
+      }
+    );
   }
 
   async updateExercise(id: number, updateExerciseDto: Partial<UpdateExerciseDto>) {
