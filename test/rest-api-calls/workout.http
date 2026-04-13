@@ -1,0 +1,56 @@
+# @import ./login.http
+@route = workout
+
+
+
+###
+# @name create-exercise
+
+{{
+exports.date = new Date().toString();
+}}
+
+@myWorkout1 = legday
+POST http://0.0.0.0:3000/{{route}}/create-workout HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+
+<@ ./posts-tests/workouts/one-workout.json
+
+
+###
+# @name find-all-workout
+GET http://0.0.0.0:3000/{{route}}
+Authorization: Bearer {{$global.jwtToken}}
+
+
+###
+# @name find-all-user-workout
+GET http://0.0.0.0:3000/{{route}}/my-workouts/
+Authorization: Bearer {{$global.jwtToken}}
+
+
+
+
+###
+# @name update-exercise
+
+{{
+exports.date = new Date().toString();
+exports.alarm = Date().toString();
+}}
+
+@myWorkout1 = legday-updated
+PATCH http://0.0.0.0:3000/{{route}}/update-workout/17 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+
+<@ ./posts-tests/workouts/update-workout.json
+
+
+###
+# @name delete-workout
+DELETE http://0.0.0.0:3000/{{route}}/delete-workout/19 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
+

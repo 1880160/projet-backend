@@ -7,6 +7,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { UserParam } from './user/user.decorator';
 import { AdminGuard } from './auth/admin.guard';
+import type { UserTokenLogin } from './auth/auth.userlogin';
 
 @Controller('users')
 export class UsersController {
@@ -21,13 +22,13 @@ export class UsersController {
   }
   @UseGuards(AuthGuard)
   @Get("/refresh-login")
-  async refreshLogin(@UserParam() user) : Promise<{ access_token: string }> {
+  async refreshLogin(@UserParam() user : UserTokenLogin) : Promise<{ access_token: string }> {
     return await this.authService.refreshToken(user.sub);
   }
 
   @UseGuards(AuthGuard)
   @Get("/my-info")
-  async getProfile(@UserParam() user ){
+  async getProfile(@UserParam() user : UserTokenLogin ){
     return user;
   }
 
@@ -44,7 +45,7 @@ export class UsersController {
   @Serialize(PublicResponseUserDTO)
   @UseGuards(AuthGuard,AdminGuard)
   @Get("/:id")
-  async findUser(@Param("id") userId : number, @Request() uwu) : Promise<User | String>{
+  async findUser(@Param("id") userId : number) : Promise<User | String>{
     return this.usersService.findOne(userId);
   }
 

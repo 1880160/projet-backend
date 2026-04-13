@@ -9,6 +9,7 @@ import { AuthModule } from './users/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ExercisesRequestModule } from './exercises/exercises-request/exercises-request.module';
 import { UserExercisesModule } from './user-exercises/user-exercises.module';
+import { WorkoutModule } from './workout/workout.module';
 @Module({
   imports: [UsersModule,
   TypeOrmModule.forRoot({
@@ -20,7 +21,8 @@ import { UserExercisesModule } from './user-exercises/user-exercises.module';
     }),
   ExercisesModule,
   ExercisesRequestModule,
-  UserExercisesModule
+  UserExercisesModule,
+  WorkoutModule
   ],
   controllers: [AppController],
   providers: [AppService,

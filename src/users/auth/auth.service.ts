@@ -7,6 +7,7 @@ import { BadRequestException } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
 import bcrypt from 'bcryptjs';
 import { hashPassword } from '../user/hashing/user.hash';
+import { UserTokenLogin } from './auth.userlogin';
 const saltRounds = 10;
 
 @Injectable()
@@ -33,7 +34,7 @@ export class AuthService {
             throw new UnauthorizedException()
         }
 
-    const payload = { sub: user.userId, username: user.username };
+    const payload : UserTokenLogin = { sub: user.userId, username: user.username };
     return {
       // 💡 Here the JWT secret key that's used for signing the payload 
       // is the key that was passsed in the JwtModule
