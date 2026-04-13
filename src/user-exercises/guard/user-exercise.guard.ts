@@ -8,10 +8,11 @@ import { User } from 'src/users/user/user.entity';
 import { UserRole } from 'src/users/user/user-role/user-roles.enum';
 import { UserExercise } from '../entities/user-exercise.entity';
 @Injectable()
-export class UserExerciseGuard implements CanActivate {
-     private readonly logger = new Logger(UserExerciseGuard.name, { timestamp: true });
-    constructor(private readonly usersService : UsersService,
-        private readonly userExerciseService : UserExercisesService
+export class UserExerciseRouteIdValidGuard implements CanActivate {
+     private readonly logger = new Logger(UserExerciseRouteIdValidGuard.name, { timestamp: true });
+    constructor(
+      private readonly usersService : UsersService,
+      private readonly userExerciseService : UserExercisesService
     ) {}
   async canActivate(
     context: ExecutionContext,

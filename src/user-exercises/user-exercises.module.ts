@@ -9,6 +9,7 @@ import { UsersModule } from 'src/users/users.module';
 @Module({
   controllers: [UserExercisesController],
   providers: [UserExercisesService],
+  exports : [UserExercisesService],
   imports : [UsersModule, ExercisesModule,
     TypeOrmModule.forFeature([UserExercise])
   ]

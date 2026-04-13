@@ -1,13 +1,12 @@
 
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-
 /**
  * Must be used with UserExerciseGuard guard and a param with "id".
- * @see UserExerciseRouteIdValidGuard
+ * @see WorkoutRouteIdValidGuard
  */
-export const UserExerciseParam = createParamDecorator(
+export const WorkoutParam = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest();
-    return request.userExercise;
+    return request.workout;
   },
 )

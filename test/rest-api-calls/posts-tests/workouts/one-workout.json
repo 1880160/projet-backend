@@ -1,0 +1,6 @@
+
+{
+    "workoutName"  : "{{ myWorkout1 }}",
+    "weekDate" : "{{ date }}",
+    "userExercisesId" : [1]
+}
