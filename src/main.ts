@@ -11,6 +11,12 @@ async function bootstrap() {
   // app.useGlobalInterceptors(
   //   new ClassSerializerInterceptor(app.get(Reflector))
   // )
+  app.enableCors(
+    {
+    allowedHeaders: ['content-type', 'Authorization'],
+    credentials: true,
+    }
+  );
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();
