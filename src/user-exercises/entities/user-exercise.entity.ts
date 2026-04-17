@@ -15,10 +15,13 @@ weight : number
 @Column()
 repetition : number
 
+@Column({default : 3})
+sets : number
+
 @Column()
 restTime : number
 
-@Column()
+@Column({default : 0})
 executionTime : number
 
 @ManyToOne(() => User, (user) => user.userId,{onDelete : "CASCADE"})

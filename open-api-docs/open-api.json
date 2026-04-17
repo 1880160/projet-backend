@@ -1,0 +1,1232 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/users/sign-in": {
+      "post": {
+        "operationId": "UsersController_signIn",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInUserDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Sign into a route",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/refresh-login": {
+      "get": {
+        "operationId": "UsersController_refreshLogin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Sign up / creates an account",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/my-info": {
+      "get": {
+        "operationId": "UsersController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Creates a request",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all the users",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/sign-up": {
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Sign-up / creates an account",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "UsersController_findUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets the user with the specified id",
+        "tags": [
+          "Users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateUserDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Updates the user",
+        "tags": [
+          "Users"
+        ]
+      },
+      "delete": {
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Removes an user",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/exercises/create-exercise": {
+      "post": {
+        "operationId": "ExercisesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExerciseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Creates an exercise in the public database",
+        "tags": [
+          "Exercises"
+        ]
+      }
+    },
+    "/exercises": {
+      "get": {
+        "operationId": "ExercisesController_findAll",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "muscle_group",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secondary_muscle_group",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all exercises, filtering by name and muscles groups",
+        "tags": [
+          "Exercises"
+        ]
+      }
+    },
+    "/exercises/{id}": {
+      "get": {
+        "operationId": "ExercisesController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets an exercise by id",
+        "tags": [
+          "Exercises"
+        ]
+      }
+    },
+    "/exercises/update-exercise/{id}": {
+      "patch": {
+        "operationId": "ExercisesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateExerciseDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Updates a exercise in the public database",
+        "tags": [
+          "Exercises"
+        ]
+      }
+    },
+    "/exercises/delete-exercise/{id}": {
+      "delete": {
+        "operationId": "ExercisesController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Deletes a exercise in the public database",
+        "tags": [
+          "Exercises"
+        ]
+      }
+    },
+    "/exercises-request/create-exercise": {
+      "post": {
+        "operationId": "ExercisesRequestController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExerciseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Creates an exercise request for the public database",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
+    "/exercises-request": {
+      "get": {
+        "operationId": "ExercisesRequestController_findAll",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "muscle_group",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secondary_muscle_group",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all exercise request, filtering by name and muscles groups",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
+    "/exercises-request/{id}": {
+      "get": {
+        "operationId": "ExercisesRequestController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets an exercise request by id",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
+    "/exercises-request/update-exercise/{id}": {
+      "patch": {
+        "operationId": "ExercisesRequestController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateExerciseDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Updates an exercise request",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
+    "/exercises-request/delete-exercise/{id}": {
+      "delete": {
+        "operationId": "ExercisesRequestController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Deletes an exercise request",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
+    "/user-exercises/create-user-exercise": {
+      "post": {
+        "operationId": "UserExercisesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserExerciseDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Create a UserExercise on a user",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
+    "/user-exercises": {
+      "get": {
+        "operationId": "UserExercisesController_findAll",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all the UserExercise, Only used by admins",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
+    "/user-exercises/my-exercises": {
+      "get": {
+        "operationId": "UserExercisesController_findUserAll",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all UserExercise of a user, filtering by name if possible",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
+    "/user-exercises/{id}": {
+      "get": {
+        "operationId": "UserExercisesController_findOne",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets an user's UserExercise by id",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
+    "/user-exercises/update-user-exercise/{id}": {
+      "patch": {
+        "operationId": "UserExercisesController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateUserExerciseDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Updates a user's UserExercise",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
+    "/user-exercises/delete-user-exercise/{id}": {
+      "delete": {
+        "operationId": "UserExercisesController_remove",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Deletes a user's UserExercise",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
+    "/workout/create-workout": {
+      "post": {
+        "operationId": "WorkoutController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWorkoutDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Creates a new workout to user's account",
+        "tags": [
+          "Workout"
+        ]
+      }
+    },
+    "/workout": {
+      "get": {
+        "operationId": "WorkoutController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all the workout, only used by admin",
+        "tags": [
+          "Workout"
+        ]
+      }
+    },
+    "/workout/my-workouts": {
+      "get": {
+        "operationId": "WorkoutController_findAllUser",
+        "parameters": [
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get the user's workouts, filtering by name",
+        "tags": [
+          "Workout"
+        ]
+      }
+    },
+    "/workout/{id}": {
+      "get": {
+        "operationId": "WorkoutController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get the workout by id, only used by admin",
+        "tags": [
+          "Workout"
+        ]
+      }
+    },
+    "/workout/update-workout/{id}": {
+      "patch": {
+        "operationId": "WorkoutController_update",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateWorkoutDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Updates a workout with the corresponding id from the user's account",
+        "tags": [
+          "Workout"
+        ]
+      }
+    },
+    "/workout/delete-workout/{id}": {
+      "delete": {
+        "operationId": "WorkoutController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Deletes a workout with the corresponding id from the user's account",
+        "tags": [
+          "Workout"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Project_Workout example",
+    "description": "The Project_Workout API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "SignInUserDTO": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "John"
+          },
+          "password": {
+            "type": "string",
+            "example": "Very12Secure&^Password^"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "John"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@workout.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Very12Secure&^Password^"
+          }
+        },
+        "required": [
+          "username",
+          "email",
+          "password"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "John"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@workout.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Very12Secure&^Password^"
+          },
+          "userType": {
+            "type": "number",
+            "example": 1,
+            "enum": [
+              0,
+              1
+            ]
+          }
+        },
+        "required": [
+          "userType"
+        ]
+      },
+      "CreateExerciseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "force": {
+            "type": "string",
+            "examples": [
+              "static",
+              "pull",
+              "push"
+            ]
+          },
+          "level": {
+            "type": "string",
+            "examples": [
+              "beginner",
+              "intermediate",
+              "expert"
+            ]
+          },
+          "mechanic": {
+            "type": "string",
+            "examples": [
+              "isolation",
+              "compound",
+              null
+            ]
+          },
+          "equipment": {
+            "type": "string",
+            "examples": [
+              null,
+              "medicine ball",
+              "dumbbell",
+              "body only",
+              "bands",
+              "kettlebells",
+              "foam roll",
+              "cable",
+              "machine",
+              "barbell",
+              "exercise ball",
+              "e-z curl bar",
+              "other"
+            ]
+          },
+          "primaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secondaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string",
+            "examples": [
+              "powerlifting",
+              "strength",
+              "stretching",
+              "cardio",
+              "olympic weightlifting",
+              "strongman",
+              "plyometrics"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "force",
+          "level",
+          "mechanic",
+          "equipment",
+          "primaryMuscles",
+          "secondaryMuscles",
+          "instructions",
+          "category"
+        ]
+      },
+      "UpdateExerciseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "force": {
+            "type": "string",
+            "examples": [
+              "static",
+              "pull",
+              "push"
+            ]
+          },
+          "level": {
+            "type": "string",
+            "examples": [
+              "beginner",
+              "intermediate",
+              "expert"
+            ]
+          },
+          "mechanic": {
+            "type": "string",
+            "examples": [
+              "isolation",
+              "compound",
+              null
+            ]
+          },
+          "equipment": {
+            "type": "string",
+            "examples": [
+              null,
+              "medicine ball",
+              "dumbbell",
+              "body only",
+              "bands",
+              "kettlebells",
+              "foam roll",
+              "cable",
+              "machine",
+              "barbell",
+              "exercise ball",
+              "e-z curl bar",
+              "other"
+            ]
+          },
+          "primaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secondaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string",
+            "examples": [
+              "powerlifting",
+              "strength",
+              "stretching",
+              "cardio",
+              "olympic weightlifting",
+              "strongman",
+              "plyometrics"
+            ]
+          }
+        }
+      },
+      "CreateUserExerciseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "my-squat-for-strength-training"
+          },
+          "weight": {
+            "type": "number",
+            "description": "The weight of the dumbell/olympic bar/other in the exercise "
+          },
+          "repetition": {
+            "type": "number",
+            "description": "The number of repetitions between sets"
+          },
+          "restTime": {
+            "type": "number",
+            "description": "The rest time between sets"
+          },
+          "sets": {
+            "type": "number",
+            "description": "The number of times do to the exercise"
+          },
+          "executionTime": {
+            "type": "number",
+            "description": "The time of in which the user 'executes' the exercise, 0 if it's an exercise which doesn't need a timed execution"
+          },
+          "exerciseId": {
+            "type": "number",
+            "description": "The exercise in which this UserExercise refers to"
+          }
+        },
+        "required": [
+          "name",
+          "weight",
+          "repetition",
+          "restTime",
+          "sets",
+          "executionTime",
+          "exerciseId"
+        ]
+      },
+      "UpdateUserExerciseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "my-squat-for-strength-training"
+          },
+          "weight": {
+            "type": "number",
+            "description": "The weight of the dumbell/olympic bar/other in the exercise "
+          },
+          "repetition": {
+            "type": "number",
+            "description": "The number of repetitions between sets"
+          },
+          "restTime": {
+            "type": "number",
+            "description": "The rest time between sets"
+          },
+          "sets": {
+            "type": "number",
+            "description": "The number of times do to the exercise"
+          },
+          "executionTime": {
+            "type": "number",
+            "description": "The time of in which the user 'executes' the exercise, 0 if it's an exercise which doesn't need a timed execution"
+          },
+          "exerciseId": {
+            "type": "number",
+            "description": "The exercise in which this UserExercise refers to"
+          }
+        }
+      },
+      "CreateWorkoutDto": {
+        "type": "object",
+        "properties": {
+          "workoutName": {
+            "type": "string",
+            "example": "Leg day"
+          },
+          "weekDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Day / of the workout"
+          },
+          "alertDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Time to alert for the next workout"
+          },
+          "userExercisesId": {
+            "description": "user Exercises to add to the workout",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "workoutName",
+          "weekDate",
+          "alertDate",
+          "userExercisesId"
+        ]
+      },
+      "UpdateWorkoutDto": {
+        "type": "object",
+        "properties": {
+          "workoutName": {
+            "type": "string",
+            "example": "Leg day"
+          },
+          "weekDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Day / of the workout"
+          },
+          "alertDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Time to alert for the next workout"
+          },
+          "userExercisesId": {
+            "description": "user Exercises to add to the workout",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
