@@ -197,6 +197,7 @@
             "description": ""
           }
         },
+        "summary": "Creates an exercise in the public database",
         "tags": [
           "Exercises"
         ]
@@ -236,6 +237,7 @@
             "description": ""
           }
         },
+        "summary": "Gets all exercises, filtering by name and muscles groups",
         "tags": [
           "Exercises"
         ]
@@ -259,6 +261,7 @@
             "description": ""
           }
         },
+        "summary": "Gets an exercise by id",
         "tags": [
           "Exercises"
         ]
@@ -292,6 +295,7 @@
             "description": ""
           }
         },
+        "summary": "Updates a exercise in the public database",
         "tags": [
           "Exercises"
         ]
@@ -315,6 +319,7 @@
             "description": ""
           }
         },
+        "summary": "Deletes a exercise in the public database",
         "tags": [
           "Exercises"
         ]
@@ -339,6 +344,7 @@
             "description": ""
           }
         },
+        "summary": "Creates an exercise request for the public database",
         "tags": [
           "ExercisesRequest"
         ]
@@ -378,6 +384,7 @@
             "description": ""
           }
         },
+        "summary": "Gets all exercise request, filtering by name and muscles groups",
         "tags": [
           "ExercisesRequest"
         ]
@@ -401,6 +408,7 @@
             "description": ""
           }
         },
+        "summary": "Gets an exercise request by id",
         "tags": [
           "ExercisesRequest"
         ]
@@ -434,6 +442,7 @@
             "description": ""
           }
         },
+        "summary": "Updates an exercise request",
         "tags": [
           "ExercisesRequest"
         ]
@@ -457,6 +466,7 @@
             "description": ""
           }
         },
+        "summary": "Deletes an exercise request",
         "tags": [
           "ExercisesRequest"
         ]
@@ -759,7 +769,132 @@
       },
       "CreateExerciseDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "force": {
+            "type": "string",
+            "examples": [
+              "static",
+              "pull",
+              "push"
+            ]
+          },
+          "level": {
+            "type": "string",
+            "examples": [
+              "beginner",
+              "intermediate",
+              "expert"
+            ]
+          },
+          "mechanic": {
+            "type": "string",
+            "examples": [
+              "isolation",
+              "compound",
+              null
+            ]
+          },
+          "equipment": {
+            "type": "string",
+            "examples": [
+              null,
+              "medicine ball",
+              "dumbbell",
+              "body only",
+              "bands",
+              "kettlebells",
+              "foam roll",
+              "cable",
+              "machine",
+              "barbell",
+              "exercise ball",
+              "e-z curl bar",
+              "other"
+            ]
+          },
+          "primaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secondaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string",
+            "examples": [
+              "powerlifting",
+              "strength",
+              "stretching",
+              "cardio",
+              "olympic weightlifting",
+              "strongman",
+              "plyometrics"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "force",
+          "level",
+          "mechanic",
+          "equipment",
+          "primaryMuscles",
+          "secondaryMuscles",
+          "instructions",
+          "category"
+        ]
       },
       "UpdateExerciseDto": {
         "type": "object",
