@@ -593,6 +593,7 @@
             "description": ""
           }
         },
+        "summary": "Creates a new workout to user's account",
         "tags": [
           "Workout"
         ]
@@ -607,6 +608,7 @@
             "description": ""
           }
         },
+        "summary": "Gets all the workout, only used by admin",
         "tags": [
           "Workout"
         ]
@@ -630,6 +632,7 @@
             "description": ""
           }
         },
+        "summary": "Get the user's workouts, filtering by name",
         "tags": [
           "Workout"
         ]
@@ -653,6 +656,7 @@
             "description": ""
           }
         },
+        "summary": "Get the workout by id, only used by admin",
         "tags": [
           "Workout"
         ]
@@ -667,6 +671,7 @@
             "description": ""
           }
         },
+        "summary": "Updates a workout with the corresponding id from the user's account",
         "tags": [
           "Workout"
         ]
@@ -690,6 +695,7 @@
             "description": ""
           }
         },
+        "summary": "Deletes a workout with the corresponding id from the user's account",
         "tags": [
           "Workout"
         ]
@@ -759,7 +765,35 @@
       },
       "CreateWorkoutDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "workoutName": {
+            "type": "string",
+            "example": "Leg day"
+          },
+          "weekDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Day / of the workout"
+          },
+          "alertDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Time to alert for the next workout"
+          },
+          "userExercisesId": {
+            "description": "user Exercises to add to the workout",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "workoutName",
+          "weekDate",
+          "alertDate",
+          "userExercisesId"
+        ]
       }
     }
   }
