@@ -4,7 +4,7 @@ import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { AuthGuard } from 'src/users/auth/auth.guard';
 import { AdminGuard } from 'src/users/auth/admin.guard';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags("Exercises")
 @UseGuards(AuthGuard,AdminGuard)
 @Controller('exercises')
@@ -29,6 +29,7 @@ export class ExercisesController {
     return await this.exercisesService.findOne(+id);
   }
   @ApiOperation({summary : "Updates a exercise in the public database"})
+  @ApiBody({ type: [UpdateExerciseDto] })
   @Patch('/update-exercise/:id')
   async update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
     return await this.exercisesService.updateExercise(+id, updateExerciseDto);

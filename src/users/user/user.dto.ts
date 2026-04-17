@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
 import { IsEmail, IsNotEmpty, IsEnum, IsString, IsStrongPassword } from "class-validator";
-import { PartialType } from "@nestjs/mapped-types";
+import { PartialType } from "@nestjs/swagger";
 import { UserRole } from "./user-role/user-roles.enum";
 import { ApiProperty } from "@nestjs/swagger";
 export class CreateUserDto {

@@ -10,7 +10,7 @@ import { UserExerciseParam } from './decorators/user-exercise.param';
 import { UserExercise } from './entities/user-exercise.entity';
 import { AdminGuard } from 'src/users/auth/admin.guard';
 import type { UserTokenLogin } from 'src/users/auth/auth.userlogin';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags("UserExercises")
 @UseGuards(AuthGuard)
 @Controller('user-exercises')
@@ -39,6 +39,7 @@ export class UserExercisesController {
     return userExercise;
   }
   @ApiOperation({summary : "Updates a user's UserExercise"})
+  @ApiBody({ type: [UpdateUserExerciseDto] })
   @UseGuards(UserExerciseRouteIdValidGuard)
   @Patch('/update-user-exercise/:id')
   async update(@Body() updateUserExerciseDto: Partial<UpdateUserExerciseDto>, @UserExerciseParam() userExercise : UserExercise) {

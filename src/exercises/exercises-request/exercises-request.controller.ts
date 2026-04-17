@@ -6,7 +6,7 @@ import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/users/auth/auth.guard';
 import { UserParam } from 'src/users/user/user.decorator';
 import { User } from 'src/users/user/user.entity';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiOperation } from '@nestjs/swagger';
 @UseGuards(AuthGuard)
 @Controller('exercises-request')
 export class ExercisesRequestController {
@@ -30,6 +30,7 @@ export class ExercisesRequestController {
     return await this.exercisesRequestService.findOne(+id);
   }
   @ApiOperation({ summary: "Updates an exercise request" })
+  @ApiBody({ type: [UpdateExerciseDto] })
   @Patch('/update-exercise/:id')
   async update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
     return await this.exercisesRequestService.updateExercise(+id, updateExerciseDto);

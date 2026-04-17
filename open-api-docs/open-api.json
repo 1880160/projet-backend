@@ -145,6 +145,19 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateUserDto"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": ""
@@ -285,7 +298,10 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateExerciseDto"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateExerciseDto"
+                }
               }
             }
           }
@@ -432,7 +448,10 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UpdateExerciseDto"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateExerciseDto"
+                }
               }
             }
           }
@@ -564,6 +583,19 @@
       "patch": {
         "operationId": "UserExercisesController_update",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateUserExerciseDto"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": ""
@@ -682,6 +714,19 @@
       "patch": {
         "operationId": "WorkoutController_update",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateWorkoutDto"
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": ""
@@ -727,6 +772,13 @@
   "tags": [],
   "servers": [],
   "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
     "schemas": {
       "SignInUserDTO": {
         "type": "object",
@@ -765,6 +817,34 @@
           "username",
           "email",
           "password"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "John"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@workout.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "Very12Secure&^Password^"
+          },
+          "userType": {
+            "type": "number",
+            "example": 1,
+            "enum": [
+              0,
+              1
+            ]
+          }
+        },
+        "required": [
+          "userType"
         ]
       },
       "CreateExerciseDto": {
@@ -898,7 +978,121 @@
       },
       "UpdateExerciseDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "force": {
+            "type": "string",
+            "examples": [
+              "static",
+              "pull",
+              "push"
+            ]
+          },
+          "level": {
+            "type": "string",
+            "examples": [
+              "beginner",
+              "intermediate",
+              "expert"
+            ]
+          },
+          "mechanic": {
+            "type": "string",
+            "examples": [
+              "isolation",
+              "compound",
+              null
+            ]
+          },
+          "equipment": {
+            "type": "string",
+            "examples": [
+              null,
+              "medicine ball",
+              "dumbbell",
+              "body only",
+              "bands",
+              "kettlebells",
+              "foam roll",
+              "cable",
+              "machine",
+              "barbell",
+              "exercise ball",
+              "e-z curl bar",
+              "other"
+            ]
+          },
+          "primaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "secondaryMuscles": {
+            "examples": [
+              "abdominals",
+              "abductors",
+              "adductors",
+              "biceps",
+              "calves",
+              "chest",
+              "forearms",
+              "glutes",
+              "hamstrings",
+              "lats",
+              "lower back",
+              "middle back",
+              "neck",
+              "quadriceps",
+              "shoulders",
+              "traps",
+              "triceps"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "category": {
+            "type": "string",
+            "examples": [
+              "powerlifting",
+              "strength",
+              "stretching",
+              "cardio",
+              "olympic weightlifting",
+              "strongman",
+              "plyometrics"
+            ]
+          }
+        }
       },
       "CreateUserExerciseDto": {
         "type": "object",
@@ -942,6 +1136,39 @@
           "exerciseId"
         ]
       },
+      "UpdateUserExerciseDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "my-squat-for-strength-training"
+          },
+          "weight": {
+            "type": "number",
+            "description": "The weight of the dumbell/olympic bar/other in the exercise "
+          },
+          "repetition": {
+            "type": "number",
+            "description": "The number of repetitions between sets"
+          },
+          "restTime": {
+            "type": "number",
+            "description": "The rest time between sets"
+          },
+          "sets": {
+            "type": "number",
+            "description": "The number of times do to the exercise"
+          },
+          "executionTime": {
+            "type": "number",
+            "description": "The time of in which the user 'executes' the exercise, 0 if it's an exercise which doesn't need a timed execution"
+          },
+          "exerciseId": {
+            "type": "number",
+            "description": "The exercise in which this UserExercise refers to"
+          }
+        }
+      },
       "CreateWorkoutDto": {
         "type": "object",
         "properties": {
@@ -973,6 +1200,32 @@
           "alertDate",
           "userExercisesId"
         ]
+      },
+      "UpdateWorkoutDto": {
+        "type": "object",
+        "properties": {
+          "workoutName": {
+            "type": "string",
+            "example": "Leg day"
+          },
+          "weekDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Day / of the workout"
+          },
+          "alertDate": {
+            "format": "date-time",
+            "type": "string",
+            "description": "Time to alert for the next workout"
+          },
+          "userExercisesId": {
+            "description": "user Exercises to add to the workout",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       }
     }
   }

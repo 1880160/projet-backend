@@ -8,7 +8,7 @@ import { AuthGuard } from './auth/auth.guard';
 import { UserParam } from './user/user.decorator';
 import { AdminGuard } from './auth/admin.guard';
 import type { UserTokenLogin } from './auth/auth.userlogin';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags("Users")
 @Controller('users')
@@ -55,6 +55,7 @@ export class UsersController {
     return this.usersService.findOne(userId);
   }
   @ApiOperation({summary : "Updates the user"})
+  @ApiBody({type : [UpdateUserDto]})
   @UseGuards(AuthGuard) /*missing admin guard for testing purposes */
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto:  Partial<UpdateUserDto> ) {
