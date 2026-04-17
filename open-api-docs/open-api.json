@@ -481,6 +481,7 @@
             "description": ""
           }
         },
+        "summary": "Create a UserExercise on a user",
         "tags": [
           "UserExercises"
         ]
@@ -504,6 +505,7 @@
             "description": ""
           }
         },
+        "summary": "Gets all the UserExercise, Only used by admins",
         "tags": [
           "UserExercises"
         ]
@@ -527,6 +529,7 @@
             "description": ""
           }
         },
+        "summary": "Gets all UserExercise of a user, filtering by name if possible",
         "tags": [
           "UserExercises"
         ]
@@ -541,6 +544,7 @@
             "description": ""
           }
         },
+        "summary": "Gets an user's UserExercise by id",
         "tags": [
           "UserExercises"
         ]
@@ -555,6 +559,7 @@
             "description": ""
           }
         },
+        "summary": "Updates a user's UserExercise",
         "tags": [
           "UserExercises"
         ]
@@ -569,6 +574,7 @@
             "description": ""
           }
         },
+        "summary": "Deletes a user's UserExercise",
         "tags": [
           "UserExercises"
         ]
@@ -761,7 +767,45 @@
       },
       "CreateUserExerciseDto": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "my-squat-for-strength-training"
+          },
+          "weight": {
+            "type": "number",
+            "description": "The weight of the dumbell/olympic bar/other in the exercise "
+          },
+          "repetition": {
+            "type": "number",
+            "description": "The number of repetitions between sets"
+          },
+          "restTime": {
+            "type": "number",
+            "description": "The rest time between sets"
+          },
+          "sets": {
+            "type": "number",
+            "description": "The number of times do to the exercise"
+          },
+          "executionTime": {
+            "type": "number",
+            "description": "The time of in which the user 'executes' the exercise, 0 if it's an exercise which doesn't need a timed execution"
+          },
+          "exerciseId": {
+            "type": "number",
+            "description": "The exercise in which this UserExercise refers to"
+          }
+        },
+        "required": [
+          "name",
+          "weight",
+          "repetition",
+          "restTime",
+          "sets",
+          "executionTime",
+          "exerciseId"
+        ]
       },
       "CreateWorkoutDto": {
         "type": "object",
