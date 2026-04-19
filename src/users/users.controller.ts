@@ -28,11 +28,12 @@ export class UsersController {
   async refreshLogin(@UserParam() user : UserTokenLogin) : Promise<{ access_token: string }> {
     return await this.authService.refreshToken(user.sub);
   }
-  @ApiOperation({summary : "Creates a request"})
+  @ApiOperation({summary : "Gets the current logged in user"})
+  @Serialize(PublicResponseUserDTO)
   @UseGuards(AuthGuard)
   @Get("/my-info")
   async getProfile(@UserParam() user : UserTokenLogin ){
-    return user;
+    return await this.usersService.findOne(user.sub);
   }
 
   @ApiOperation({ summary: "Gets all the users"})

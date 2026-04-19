@@ -53,7 +53,9 @@ export class SignInUserDTO {
 
 export class PublicResponseUserDTO {
     @Expose()
-    id: number
+    userId: number
     @Expose()
     email: string
+    @Expose()
+    username : String
 }
