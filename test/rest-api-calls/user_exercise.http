@@ -16,7 +16,7 @@ Authorization: Bearer {{$global.jwtToken}}
 
 ###
 # @name find-user-all
-GET http://0.0.0.0:3000/{{route}}/my-exercises/?name=e
+GET http://0.0.0.0:3000/{{route}}/my-exercises/?name=my&category=strength&muscle_group=biceps
 Authorization: Bearer {{$global.jwtToken}}
 
 

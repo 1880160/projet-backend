@@ -229,7 +229,7 @@
             }
           },
           {
-            "name": "muscle_group",
+            "name": "category",
             "required": true,
             "in": "query",
             "schema": {
@@ -237,7 +237,7 @@
             }
           },
           {
-            "name": "secondary_muscle_group",
+            "name": "muscle_group",
             "required": true,
             "in": "query",
             "schema": {
@@ -546,6 +546,22 @@
         "parameters": [
           {
             "name": "name",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "muscle_group",
             "required": true,
             "in": "query",
             "schema": {

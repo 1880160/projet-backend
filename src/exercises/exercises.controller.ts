@@ -6,11 +6,12 @@ import { AuthGuard } from 'src/users/auth/auth.guard';
 import { AdminGuard } from 'src/users/auth/admin.guard';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 @ApiTags("Exercises")
-@UseGuards(AuthGuard,AdminGuard)
+@UseGuards(AuthGuard)
 @Controller('exercises')
 export class ExercisesController {
   constructor(private readonly exercisesService: ExercisesService) {}
   @ApiOperation({summary : "Creates an exercise in the public database"})
+  @UseGuards(AdminGuard)
   @Post("/create-exercise")
   async create(@Body() createExerciseDto: CreateExerciseDto) {
     return await this.exercisesService.createExercise(createExerciseDto).catch(() => {
@@ -20,8 +21,8 @@ export class ExercisesController {
   }
   @ApiOperation({summary : "Gets all exercises, filtering by name and muscles groups"})
   @Get()
-  async findAll(@Query('name') name : string, @Query('muscle_group') muscleGroup : string, @Query('secondary_muscle_group') secondaryMuscleGroup : string) {
-    return await this.exercisesService.findAll(name, muscleGroup, secondaryMuscleGroup);
+  async findAll(@Query('name') name : string = "", @Query('category') category : string = "", @Query('muscle_group') muscleGroup : string = "") {
+    return await this.exercisesService.findAll(name, muscleGroup, category);
   }
   @ApiOperation({summary : "Gets an exercise by id"})
   @Get(':id')
@@ -29,12 +30,14 @@ export class ExercisesController {
     return await this.exercisesService.findOne(+id);
   }
   @ApiOperation({summary : "Updates a exercise in the public database"})
+  @UseGuards(AdminGuard)
   @ApiBody({ type: [UpdateExerciseDto] })
   @Patch('/update-exercise/:id')
   async update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
     return await this.exercisesService.updateExercise(+id, updateExerciseDto);
   }
   @ApiOperation({summary : "Deletes a exercise in the public database"})
+  @UseGuards(AdminGuard)
   @Delete('/delete-exercise/:id')
   async remove(@Param('id') id: string) {
     return await this.exercisesService.deleteExercise(+id);

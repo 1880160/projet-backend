@@ -10,6 +10,12 @@ Content-Type: application/json
 < ./posts-tests/exercises/one-exercise.json
 
 
+###
+# @name create-exercise-2
+POST http://0.0.0.0:3000/{{route}}/create-exercise HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+< ./posts-tests/exercises/other-exercise.json
 
 ###
 # @name find-exercise

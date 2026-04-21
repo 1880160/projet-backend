@@ -29,8 +29,8 @@ export class UserExercisesController {
   }
   @ApiOperation({summary : "Gets all UserExercise of a user, filtering by name if possible"})
   @Get("/my-exercises")
-  async findUserAll(@Query('name') name : string, @UserParam() user : UserTokenLogin ){
-    return await this.userExercisesService.getUserExerciseFilteredBy(name, user.sub)
+  async findUserAll(@UserParam() user : UserTokenLogin, @Query('name') name : string = "", @Query('category') category : string = "", @Query('muscle_group') muscleGroup : string = ""){
+    return await this.userExercisesService.getUserExerciseFilteredBy(user.sub,name, category, muscleGroup )
   }
   @ApiOperation({summary : "Gets an user's UserExercise by id"})
   @UseGuards(UserExerciseRouteIdValidGuard)

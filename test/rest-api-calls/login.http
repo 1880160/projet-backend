@@ -15,6 +15,13 @@ Content-Type: application/json
     "userType" : 1
 }
 
+# @name make-admin-2
+PATCH http://0.0.0.0:3000/users/2 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+{
+    "userType" : 1
+}
 
 ###
 # @name create

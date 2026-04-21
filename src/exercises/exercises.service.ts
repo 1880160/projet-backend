@@ -20,11 +20,15 @@ private readonly logger = new Logger(ExercisesService.name, { timestamp: true })
     return this.exerciseRepository.save(newExercise);
   }
 
-  async findAll(name : string, muscleGroup : string, secondaryMuscleGroup) {
-    name = name ? name : "";
-    muscleGroup = muscleGroup ? muscleGroup : "";
-    secondaryMuscleGroup = secondaryMuscleGroup ? secondaryMuscleGroup : "";
-    return await this.exerciseRepository.findBy({name : ILike(`%${name}%`), primaryMuscles : ILike(`%${muscleGroup}%`), secondaryMuscles : ILike(`%${secondaryMuscleGroup}%`)})
+  async findAll(name : string, muscleGroup : string, category : string) {
+    return await this.exerciseRepository.createQueryBuilder('exercises')
+    .where({name : ILike(`%${name}%`)})
+    .andWhere({category : ILike(`%${category}%`)})
+    .andWhere([{primaryMuscles : ILike(`%${muscleGroup}%`)},
+      { secondaryMuscles : ILike(`%${muscleGroup}%`)}
+    ])
+    .getMany();
+    
   }
 
   async findOne(id: number) {
