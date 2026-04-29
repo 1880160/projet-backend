@@ -31,7 +31,7 @@ export class WorkoutController {
 
   @ApiOperation({ summary: "Get the user's workouts, filtering by name" })
   @Get("/my-workouts")
-  async findAllUser(@Query('name') name: string, @UserParam() user: UserTokenLogin) {
+  async findAllUser(@Query('name') name: string = "", @UserParam() user: UserTokenLogin) {
     return await this.workoutService.getAllUserWorkoutFilteredBy(name, user.sub);
   }
   @ApiOperation({ summary: "Get the workout by id, only used by admin" })

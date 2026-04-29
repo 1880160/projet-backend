@@ -44,7 +44,7 @@ export class WorkoutService {
   async getAllUserWorkoutFilteredBy(name : string, userId : number) {
     return this.workoutRepository.find({
       relations: {
-        userExercises: true
+        userExercises: {exercise : true},
       },
       where :
       {

@@ -3,5 +3,5 @@
     "workoutName"  : "{{ myWorkout1 }}",
     "weekDate" : "{{ date }}",
     "alertDate" : "{{ alarm }}",
-    "userExercisesId" : [1,2]
+    "userExercisesId" : [9,10]
 }
