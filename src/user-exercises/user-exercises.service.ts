@@ -63,7 +63,18 @@ export class UserExercisesService {
 
 
   async findOne(id: number) {
-    return await this.userExerciseRepository.findOneByOrFail({ userExerciseId: id }).catch(
+    return await this.userExerciseRepository.findOneOrFail({  where :
+      {
+        userExerciseId: id
+
+      },
+
+      relations : {
+        user : true,
+        exercise : true
+      }
+    }
+    ).catch(
       () => {
         const message: String = `couldn't find userExercise with id : ${id}`;
         this.logger.warn(message, this);
@@ -74,6 +85,13 @@ export class UserExercisesService {
 
   async updateUserExercise(id: number, updateUserExerciseDto: Partial<UpdateUserExerciseDto>) {
     this.logger.log(updateUserExerciseDto);
+
+    const relatedExercise = await this.exerciseService.findOne(updateUserExerciseDto.exerciseId ?? -1);
+    if (relatedExercise instanceof String) {
+      throw new BadRequestException(relatedExercise)
+    }
+    updateUserExerciseDto.exercise = relatedExercise
+    updateUserExerciseDto.exerciseId = undefined
     return await this.userExerciseRepository.update({ userExerciseId: id }, updateUserExerciseDto);
   }
 

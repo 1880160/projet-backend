@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "src/users/user/user.entity";
 import { Exercise } from "src/exercises/entities/exercise.entity";
 @Entity()
@@ -27,7 +27,7 @@ executionTime : number
 @ManyToOne(() => User, (user) => user.userId,{onDelete : "CASCADE"})
 user : User
 
-@ManyToOne(() => Exercise, (exercise) => exercise.exerciseId,{onDelete : "CASCADE"})
+@ManyToOne(() => Exercise, (exercise) => exercise.exerciseId,{onDelete : "CASCADE", onUpdate: "CASCADE"})
 exercise : Exercise
 
 }

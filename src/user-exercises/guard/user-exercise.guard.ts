@@ -44,10 +44,10 @@ export class UserExerciseRouteIdValidGuard implements CanActivate {
     throw new BadRequestException(userExercise)
    }
    request.userExercise = userExercise;
-
    if(userExercise.user && userExercise.user.userId == internalUser.userId){
     return true;
    }
+   
    if (internalUser.userType == UserRole.USER) {return false}
     return true;
   }

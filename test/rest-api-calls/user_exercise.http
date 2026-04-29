@@ -30,7 +30,7 @@ Authorization: Bearer {{$global.jwtToken}}
 
 ###
 # @name update-one
-PATCH http://0.0.0.0:3000/{{route}}/update-user-exercise/1 HTTP/1.1
+PATCH http://0.0.0.0:3000/{{route}}/update-user-exercise/8 HTTP/1.1
 Authorization: Bearer {{$global.jwtToken}}
 Content-Type: application/json
 < ./posts-tests/user-exercise/updates/update-one-user_exercise.json
