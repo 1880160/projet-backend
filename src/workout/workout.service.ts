@@ -5,7 +5,7 @@ import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Workout } from './entities/workout.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { UserExercisesService } from 'src/user-exercises/user-exercises.service';
 import { UserExercise } from 'src/user-exercises/entities/user-exercise.entity';
 import { Logger } from '@nestjs/common';
@@ -48,7 +48,7 @@ export class WorkoutService {
       },
       where :
       {
-        workoutName : name,
+        workoutName : ILike(`%${name}%`),
         user : {userId : userId}
       }
       

@@ -33,7 +33,7 @@ Authorization: Bearer {{$global.jwtToken}}
 
 
 ###
-# @name update-exercise
+# @name update-workout
 
 {{
 exports.date = new Date().toString();
