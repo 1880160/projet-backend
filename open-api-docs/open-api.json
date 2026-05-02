@@ -580,6 +580,30 @@
         ]
       }
     },
+    "/user-exercises/my-exercises-by-ids": {
+      "get": {
+        "operationId": "UserExercisesController_findUserMultipleIds",
+        "parameters": [
+          {
+            "name": "ids",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets multiple UserExercise of a user, by ids",
+        "tags": [
+          "UserExercises"
+        ]
+      }
+    },
     "/user-exercises/{id}": {
       "get": {
         "operationId": "UserExercisesController_findOne",

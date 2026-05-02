@@ -4,7 +4,7 @@ import { UpdateUserExerciseDto } from './dto/update-user-exercise.dto';
 import { User } from 'src/users/user/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserExercise } from './entities/user-exercise.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { ExercisesService } from 'src/exercises/exercises.service';
 import { Logger } from '@nestjs/common';
@@ -60,18 +60,31 @@ export class UserExercisesService {
 
   }
 
-
+  async findMultiple(userId :number, ids : number[]){
+    return await this.userExerciseRepository.find({
+      where : {
+        user : {userId : userId},
+        userExerciseId : In(ids)
+      },
+      
+      relations: {
+        user: true,
+        exercise: true
+      }
+    })
+  }
 
   async findOne(id: number) {
-    return await this.userExerciseRepository.findOneOrFail({  where :
+    return await this.userExerciseRepository.findOneOrFail({
+      where:
       {
         userExerciseId: id
 
       },
 
-      relations : {
-        user : true,
-        exercise : true
+      relations: {
+        user: true,
+        exercise: true
       }
     }
     ).catch(

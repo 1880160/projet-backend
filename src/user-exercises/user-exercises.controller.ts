@@ -32,12 +32,19 @@ export class UserExercisesController {
   async findUserAll(@UserParam() user : UserTokenLogin, @Query('name') name : string = "", @Query('category') category : string = "", @Query('muscle_group') muscleGroup : string = ""){
     return await this.userExercisesService.getUserExerciseFilteredBy(user.sub,name, category, muscleGroup )
   }
+  @ApiOperation({summary : "Gets multiple UserExercise of a user, by ids"})
+  @Get("/my-exercises-by-ids")
+  async findUserMultipleIds(@UserParam() user : UserTokenLogin, @Query("ids") ids : string = ""){
+    const idArray = ids ? ids.split(',').map(id => Number(id.trim())) : [];
+    return await this.userExercisesService.findMultiple(user.sub,idArray)
+  }
   @ApiOperation({summary : "Gets an user's UserExercise by id"})
   @UseGuards(UserExerciseRouteIdValidGuard)
   @Get(':id')
   async findOne(@UserExerciseParam() userExercise : UserExercise ) {
     return userExercise;
   }
+
   @ApiOperation({summary : "Updates a user's UserExercise"})
   @ApiBody({ type: [UpdateUserExerciseDto] })
   @UseGuards(UserExerciseRouteIdValidGuard)

@@ -19,8 +19,10 @@ Authorization: Bearer {{$global.jwtToken}}
 GET http://0.0.0.0:3000/{{route}}/my-exercises/?name=my&category=strength&muscle_group=biceps
 Authorization: Bearer {{$global.jwtToken}}
 
-
-
+###
+# @name find-multiple
+GET http://0.0.0.0:3000/{{route}}/my-exercises-by-ids/?ids=1,2
+Authorization: Bearer {{$global.jwtToken}}
 ###
 # @name find-one
 GET http://0.0.0.0:3000/{{route}}/1 HTTP/1.1
