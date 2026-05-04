@@ -56,7 +56,7 @@ export class WorkoutService {
   }
 
   async findOne(id: number) {
-    return this.workoutRepository.findOne({ where: { workoutId: id }, relations: {user : true} }).catch(
+    return this.workoutRepository.findOne({ where: { workoutId: id }, relations: {user : true, userExercises : true} }).catch(
       () => {
         const message : String =  `couldn't find workout with id : ${id}`;
         this.logger.warn(message, this);
@@ -76,8 +76,11 @@ export class WorkoutService {
         }
       }
     }
-    const newWorkout = await this.workoutRepository.merge(workout,updateWorkoutDto)
-    return await this.workoutRepository.save(newWorkout);
+    workout.userExercises = updateWorkoutDto.userExercises ?? workout.userExercises
+    workout.workoutName = updateWorkoutDto.workoutName ?? workout.workoutName
+    workout.weekDate = updateWorkoutDto.weekDate ?? new Date('2026-5-3T00:00:00"')
+    workout.alertDate = updateWorkoutDto.alertDate ?? workout.weekDate
+    return await this.workoutRepository.save(workout);
   }
   async deleteWorkout(id: number) {
     return await this.workoutRepository.delete({workoutId : id})

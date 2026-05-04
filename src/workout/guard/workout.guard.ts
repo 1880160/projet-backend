@@ -42,7 +42,7 @@ export class WorkoutRouteIdValidGuard implements CanActivate {
    const workout = await this.workoutService.findOne(workoutId)
    if (!(workout instanceof Workout)){
     this.logger.error(workout)
-    throw new BadRequestException(workout)
+    throw new BadRequestException(workout ?? "This workout doesn't exist")
    }
    request.workout = workout;
 

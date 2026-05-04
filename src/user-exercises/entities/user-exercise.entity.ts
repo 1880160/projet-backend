@@ -24,7 +24,7 @@ restTime : number
 @Column({default : 0})
 executionTime : number
 
-@ManyToOne(() => User, (user) => user.userId,{onDelete : "CASCADE"})
+@ManyToOne(() => User, (user) => user.userId,{onDelete : "CASCADE", onUpdate : "CASCADE"})
 user : User
 
 @ManyToOne(() => Exercise, (exercise) => exercise.exerciseId,{onDelete : "CASCADE", onUpdate: "CASCADE"})

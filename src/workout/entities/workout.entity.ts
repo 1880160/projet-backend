@@ -16,7 +16,7 @@ export class Workout {
     @Column({nullable: true})
     alertDate : Date
 
-    @ManyToMany(() => UserExercise,{onDelete : "CASCADE"})
+    @ManyToMany(() => UserExercise,{onDelete : "CASCADE", onUpdate: "CASCADE"})
     @JoinTable()
     userExercises : UserExercise[]
 

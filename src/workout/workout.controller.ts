@@ -34,12 +34,21 @@ export class WorkoutController {
   async findAllUser(@Query('name') name: string = "", @UserParam() user: UserTokenLogin) {
     return await this.workoutService.getAllUserWorkoutFilteredBy(name, user.sub);
   }
+
   @ApiOperation({ summary: "Get the workout by id, only used by admin" })
   @UseGuards(AdminGuard)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.workoutService.findOne(+id);
   }
+
+  @ApiOperation({ summary: "Get the user's workout by id" })
+  @UseGuards(WorkoutRouteIdValidGuard)
+  @Get('/my-workouts/:id')
+  async findUserOne(@WorkoutParam() workout: Workout) {
+    return workout;
+  }
+
   @ApiOperation({ summary: "Updates a workout with the corresponding id from the user's account" })
   @ApiBody({ type: [UpdateWorkoutDto] })
   @UseGuards(WorkoutRouteIdValidGuard)

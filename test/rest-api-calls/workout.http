@@ -30,6 +30,12 @@ GET http://0.0.0.0:3000/{{route}}/my-workouts/
 Authorization: Bearer {{$global.jwtToken}}
 
 
+###
+# @name find-one-user-workout
+GET http://0.0.0.0:3000/{{route}}/my-workouts/2
+Authorization: Bearer {{$global.jwtToken}}
+
+
 
 
 ###

@@ -750,6 +750,21 @@
         ]
       }
     },
+    "/workout/my-workouts/{id}": {
+      "get": {
+        "operationId": "WorkoutController_findUserOne",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Get the user's workout by id",
+        "tags": [
+          "Workout"
+        ]
+      }
+    },
     "/workout/update-workout/{id}": {
       "patch": {
         "operationId": "WorkoutController_update",
