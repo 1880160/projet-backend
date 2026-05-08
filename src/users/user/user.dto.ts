@@ -58,4 +58,6 @@ export class PublicResponseUserDTO {
     email: string
     @Expose()
     username : String
+    @Expose()
+    userType : UserRole
 }

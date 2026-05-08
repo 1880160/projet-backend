@@ -17,9 +17,24 @@ GET http://0.0.0.0:3000/{{route}}/?name=alternate&muscle_group=biceps&secondary_
 Authorization: Bearer {{$global.jwtToken}}
 
 ###
+# @name find-all-exercise
+GET http://0.0.0.0:3000/{{route}}/ HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
+
+
+###
 # @name find-one
 GET http://0.0.0.0:3000/{{route}}/1 HTTP/1.1
 Authorization: Bearer {{$global.jwtToken}}
+
+
+
+###
+# @name count
+GET http://0.0.0.0:3000/{{route}}/count/ HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
 
 ###
 # @name update-exercise
@@ -32,3 +47,15 @@ Content-Type: application/json
 # @name delete-exercise
 DELETE http://0.0.0.0:3000/{{route}}/delete-exercise/1 HTTP/1.1
 Authorization: Bearer {{$global.jwtToken}}
+
+###
+# @name approve-exercise
+POST http://0.0.0.0:3000/{{route}}/approve HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json
+
+{
+    "id" : 8
+}
+
+

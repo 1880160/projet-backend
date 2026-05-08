@@ -406,6 +406,21 @@
         ]
       }
     },
+    "/exercises-request/count": {
+      "get": {
+        "operationId": "ExercisesRequestController_count",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets the number of exercise request",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
     "/exercises-request/{id}": {
       "get": {
         "operationId": "ExercisesRequestController_findOne",
@@ -486,6 +501,21 @@
           }
         },
         "summary": "Deletes an exercise request",
+        "tags": [
+          "ExercisesRequest"
+        ]
+      }
+    },
+    "/exercises-request/approve": {
+      "post": {
+        "operationId": "ExercisesRequestController_approve",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "Approves an exercise, moving it to an actual exercise",
         "tags": [
           "ExercisesRequest"
         ]

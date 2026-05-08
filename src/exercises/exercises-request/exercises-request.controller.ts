@@ -7,6 +7,7 @@ import { AuthGuard } from 'src/users/auth/auth.guard';
 import { UserParam } from 'src/users/user/user.decorator';
 import { User } from 'src/users/user/user.entity';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { AdminGuard } from 'src/users/auth/admin.guard';
 @UseGuards(AuthGuard)
 @Controller('exercises-request')
 export class ExercisesRequestController {
@@ -24,20 +25,42 @@ export class ExercisesRequestController {
   async findAll(@Query('name') name: string, @Query('muscle_group') muscleGroup: string, @Query('secondary_muscle_group') secondaryMuscleGroup: string) {
     return await this.exercisesRequestService.findAll(name, muscleGroup, secondaryMuscleGroup);
   }
+  @ApiOperation({
+    summary : "Gets the number of exercise request"
+  })
+  @Get('/count')
+  async count(){
+    return await this.exercisesRequestService.getAmount()
+  }
+  
+
+
   @ApiOperation({ summary: "Gets an exercise request by id" })
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.exercisesRequestService.findOne(+id);
   }
+
+
+
   @ApiOperation({ summary: "Updates an exercise request" })
   @ApiBody({ type: [UpdateExerciseDto] })
+  @UseGuards(AdminGuard)
   @Patch('/update-exercise/:id')
   async update(@Param('id') id: string, @Body() updateExerciseDto: UpdateExerciseDto) {
     return await this.exercisesRequestService.updateExercise(+id, updateExerciseDto);
   }
   @ApiOperation({ summary: "Deletes an exercise request" })
+  @UseGuards(AdminGuard)
   @Delete('/delete-exercise/:id')
   async remove(@Param('id') id: string) {
     return await this.exercisesRequestService.deleteExercise(+id);
+  }
+
+  @ApiOperation({summary : "Approves an exercise, moving it to an actual exercise"})
+  @UseGuards(AdminGuard)
+  @Post('/approve')
+  async approve(@Body('id') id : number){
+    return await this.exercisesRequestService.approveExercise(+id);
   }
 }

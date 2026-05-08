@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { UpdateExerciseDto } from './dto/update-exercise.dto';
 import { Exercise } from './entities/exercise.entity';
@@ -16,6 +16,16 @@ private readonly logger = new Logger(ExercisesService.name, { timestamp: true })
 
 
   async createExercise(createExerciseDto: CreateExerciseDto) {
+    const nameExists = await this.exerciseRepository.exists({
+      where : {
+        name : createExerciseDto.name
+      }
+    })
+    if (nameExists){
+      const message : String =  `Exercise with similar name exists`;
+      this.logger.warn(message, this);
+      throw new BadRequestException(message);
+    }
     const newExercise = this.exerciseRepository.create(createExerciseDto);
     return this.exerciseRepository.save(newExercise);
   }
@@ -32,7 +42,7 @@ private readonly logger = new Logger(ExercisesService.name, { timestamp: true })
   }
 
   async findOne(id: number) {
-    return this.exerciseRepository.findOneByOrFail({exerciseId : id}).catch(
+    return await this.exerciseRepository.findOneByOrFail({exerciseId : id}).catch(
       () => {
         const message : String =  `couldn't find exercise with id : ${id}`;
         this.logger.warn(message, this);
