@@ -10,6 +10,7 @@ import { ExercisesService } from 'src/exercises/exercises.service';
 import { Logger } from '@nestjs/common';
 import { ILike } from 'typeorm';
 import { Exercise } from 'src/exercises/entities/exercise.entity';
+import { NotificationService } from 'src/notification/notification.service';
 @Injectable()
 export class UserExercisesService {
   private readonly logger = new Logger(UserExercisesService.name, { timestamp: true });
@@ -17,7 +18,8 @@ export class UserExercisesService {
     @InjectRepository(UserExercise)
     private userExerciseRepository: Repository<UserExercise>,
     private readonly userService: UsersService,
-    private readonly exerciseService: ExercisesService
+    private readonly exerciseService: ExercisesService,
+    private readonly notificationService: NotificationService
   ) { }
 
 
@@ -35,7 +37,12 @@ export class UserExercisesService {
     createUserExerciseDto.exercise = relatedExercise
     createUserExerciseDto.user = newUser;
     const newUserExercise = await this.userExerciseRepository.create(createUserExerciseDto)
-    return await this.userExerciseRepository.save(newUserExercise);
+    const result = await this.userExerciseRepository.save(newUserExercise);
+    this.notificationService.createNotification({
+      message: `The exercise ${createUserExerciseDto.name} has been created successfully`,
+      userId: userId
+    });
+    return result;
   }
 
   async findAll(name: string = "", muscleGroup = "", category = "") {
@@ -60,13 +67,13 @@ export class UserExercisesService {
 
   }
 
-  async findMultiple(userId :number, ids : number[]){
+  async findMultiple(userId: number, ids: number[]) {
     return await this.userExerciseRepository.find({
-      where : {
-        user : {userId : userId},
-        userExerciseId : In(ids)
+      where: {
+        user: { userId: userId },
+        userExerciseId: In(ids)
       },
-      
+
       relations: {
         user: true,
         exercise: true
@@ -105,7 +112,8 @@ export class UserExercisesService {
     }
     updateUserExerciseDto.exercise = relatedExercise
     updateUserExerciseDto.exerciseId = undefined
-    return await this.userExerciseRepository.update({ userExerciseId: id }, updateUserExerciseDto);
+    const result = await this.userExerciseRepository.update({ userExerciseId: id }, updateUserExerciseDto);
+    return result;
   }
 
   async deleteUserExercise(id: number) {

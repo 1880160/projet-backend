@@ -521,6 +521,163 @@
         ]
       }
     },
+    "/notification/sse": {
+      "get": {
+        "operationId": "NotificationController_sse",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Watches for changes in the user's notification",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification/create-notification": {
+      "post": {
+        "operationId": "NotificationController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNotificationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "summary": "creates an new notification",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification/my-notifications": {
+      "get": {
+        "operationId": "NotificationController_findAllUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all the notifications of the user",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification": {
+      "get": {
+        "operationId": "NotificationController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all the notifications, used by admin",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification/{id}": {
+      "get": {
+        "operationId": "NotificationController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets the notification by id, only used by admin",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification/my-notification/{id}": {
+      "get": {
+        "operationId": "NotificationController_findOneUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Gets all the user's notifications",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification/update-notification/{id}": {
+      "patch": {
+        "operationId": "NotificationController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Updates a notification with the corresponding id from the user's account",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
+    "/notification/delete-notification/{id}": {
+      "delete": {
+        "operationId": "NotificationController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "Deletes a notification with the corresponding id from the user's account",
+        "tags": [
+          "Notification"
+        ]
+      }
+    },
     "/user-exercises/create-user-exercise": {
       "post": {
         "operationId": "UserExercisesController_create",
@@ -1178,6 +1335,29 @@
             ]
           }
         }
+      },
+      "CreateNotificationDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Notification's message"
+          },
+          "context": {
+            "type": "string",
+            "description": "Context of this notification's message",
+            "example": "WORKOUT"
+          },
+          "userId": {
+            "type": "number",
+            "description": "user which this notification belongs to"
+          }
+        },
+        "required": [
+          "message",
+          "context",
+          "userId"
+        ]
       },
       "CreateUserExerciseDto": {
         "type": "object",

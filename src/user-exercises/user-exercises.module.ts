@@ -5,13 +5,15 @@ import { ExercisesModule } from 'src/exercises/exercises.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserExercise } from './entities/user-exercise.entity';
 import { UsersModule } from 'src/users/users.module';
+import { NotificationModule } from 'src/notification/notification.module';
 
 @Module({
   controllers: [UserExercisesController],
   providers: [UserExercisesService],
   exports : [UserExercisesService],
   imports : [UsersModule, ExercisesModule,
-    TypeOrmModule.forFeature([UserExercise])
+    TypeOrmModule.forFeature([UserExercise]),
+    NotificationModule
   ]
 })
 export class UserExercisesModule {}

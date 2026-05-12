@@ -6,18 +6,20 @@ import { CreateExerciseDto } from '../dto/create-exercise.dto';
 import { ILike } from 'typeorm';
 import { UpdateExerciseDto } from '../dto/update-exercise.dto';
 import { ExercisesService } from '../exercises.service';
-import { Exercise } from '../entities/exercise.entity';
 import { CreateExerciseRequestDto } from './dto/create-exercise-request';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/user/user.entity';
+import { NotificationService } from 'src/notification/notification.service';
+import { CreateNotificationDto } from 'src/notification/dto/create-notification.dto';
 @Injectable()
 export class ExercisesRequestService {
-private readonly logger = new Logger(ExercisesRequestService.name, { timestamp: true });
+  private readonly logger = new Logger(ExercisesRequestService.name, { timestamp: true });
   constructor(
     @InjectRepository(ExerciseRequest)
     private exerciseRequestRepository: Repository<ExerciseRequest>,
     private readonly exerciseService: ExercisesService,
-    private readonly userService: UsersService
+    private readonly userService: UsersService,
+    private readonly notificationService: NotificationService
   ) { }
 
   async createExercise(createExerciseDto: CreateExerciseDto, userId: number) {
@@ -28,9 +30,14 @@ private readonly logger = new Logger(ExercisesRequestService.name, { timestamp: 
     const newExerciseRequestDto: CreateExerciseRequestDto = createExerciseDto as CreateExerciseRequestDto
     newExerciseRequestDto.user = newUser;
     const newRequestExercise = this.exerciseRequestRepository.create(newExerciseRequestDto);
-    return await this.exerciseRequestRepository.save(newRequestExercise);
+    const result = await this.exerciseRequestRepository.save(newRequestExercise);
+    this.notificationService.createNotification({
+      message: `Your exercise ${newRequestExercise.name} has been submitted for approval`,
+      userId: newRequestExercise.user.userId
+    })
+    return result;
   }
-  async getAmount(){
+  async getAmount() {
     return await this.exerciseRequestRepository.count();
   }
   async findAll(name: string, muscleGroup: string, secondaryMuscleGroup) {
@@ -58,9 +65,9 @@ private readonly logger = new Logger(ExercisesRequestService.name, { timestamp: 
         }
       }).catch(
         () => {
-          const message : String =  `couldn't find exercise with id : ${id}`;
-        this.logger.warn(message, this);
-        throw new BadRequestException(message)
+          const message: String = `couldn't find exercise with id : ${id}`;
+          this.logger.warn(message, this);
+          throw new BadRequestException(message)
         }
       )
   }
@@ -91,6 +98,10 @@ private readonly logger = new Logger(ExercisesRequestService.name, { timestamp: 
 
       instructions: exerciseRequest.instructions,
       category: exerciseRequest.category
+    })
+    this.notificationService.createNotification({
+      message: `Your exercise ${createdExercise.name} has been approved`,
+      userId: exerciseRequest.user.userId
     })
     // exercise request delete
     await this.deleteExercise(id);

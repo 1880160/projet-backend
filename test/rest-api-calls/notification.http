@@ -1,0 +1,62 @@
+# @import ./login.http
+@route = notification
+
+
+SSE http://0.0.0.0:3000/notification/sse
+Authorization: Bearer {{$global.jwtToken}}
+{{@streaming
+//$requestClient.addEventListener("message", (response) => console.info("hook"));
+// $requestClient.onmessage = ({ data }) => {
+//   console.info(data);
+// };
+
+async function writeStream(){
+    await sleep(10000);
+  }
+  exports.waitPromise = writeStream();
+}}
+
+
+###
+# @name find-all-user
+GET http://0.0.0.0:3000/notification/my-notifications
+Authorization: Bearer {{$global.jwtToken}}
+
+
+###
+# @name find-one-user
+GET http://0.0.0.0:3000/notification/my-notification/1
+Authorization: Bearer {{$global.jwtToken}}
+
+
+
+###
+# @name create-notification
+POST http://0.0.0.0:3000/notification/create-notification/
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json 
+< ./posts-tests/notification/one-notification.json
+
+###
+# @name update-notification
+PATCH http://0.0.0.0:3000/notification/update-notification/1 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+Content-Type: application/json 
+< ./posts-tests/notification/update-notification.json
+
+
+###
+# @name delete-notification
+DELETE http://0.0.0.0:3000/notification/delete-notification/2 HTTP/1.1
+Authorization: Bearer {{$global.jwtToken}}
+
+###
+# @name find-all-admin
+GET http://0.0.0.0:3000/notification/
+Authorization: Bearer {{$global.jwtToken}}
+
+###
+# @name find-one-admin
+GET http://0.0.0.0:3000/notification/1
+Authorization: Bearer {{$global.jwtToken}}
+

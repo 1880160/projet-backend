@@ -7,7 +7,7 @@
 POST http://0.0.0.0:3000/{{route}}/create-exercise HTTP/1.1
 Authorization: Bearer {{$global.jwtToken}}
 Content-Type: application/json
-< ./posts-tests/exercises/one-exercise.json
+< ./posts-tests/exercise-request/one-exercise.json
 
 
 
@@ -55,7 +55,7 @@ Authorization: Bearer {{$global.jwtToken}}
 Content-Type: application/json
 
 {
-    "id" : 8
+    "id" : 3
 }
 
 
