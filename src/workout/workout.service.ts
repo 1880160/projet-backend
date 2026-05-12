@@ -9,6 +9,7 @@ import { ILike, Repository } from 'typeorm';
 import { UserExercisesService } from 'src/user-exercises/user-exercises.service';
 import { UserExercise } from 'src/user-exercises/entities/user-exercise.entity';
 import { Logger } from '@nestjs/common';
+import { NotificationService } from 'src/notification/notification.service';
 @Injectable()
 export class WorkoutService {
   private readonly logger = new Logger(WorkoutService.name, { timestamp: true });
@@ -16,7 +17,8 @@ export class WorkoutService {
     @InjectRepository(Workout)
     private workoutRepository: Repository<Workout>,
     private readonly userService: UsersService,
-    private readonly userExerciseService: UserExercisesService
+    private readonly userExerciseService: UserExercisesService,
+    private readonly notificationService: NotificationService
   ) { }
 
   async createWorkout(userId: number, createWorkoutDto: CreateWorkoutDto) {
@@ -28,10 +30,16 @@ export class WorkoutService {
     for (const userExerciseId of createWorkoutDto.userExercisesId) {
       const userExercise: String | UserExercise = await this.userExerciseService.findOne(userExerciseId)
       if ((userExercise instanceof UserExercise)) {
-        createWorkoutDto.userExercises = [...createWorkoutDto.userExercises, userExercise];      }
+        createWorkoutDto.userExercises = [...createWorkoutDto.userExercises, userExercise];
+      }
     }
     const newWorkout = this.workoutRepository.create(createWorkoutDto);
-    return this.workoutRepository.save(newWorkout);
+    const result = await this.workoutRepository.save(newWorkout);
+    this.notificationService.createNotification({
+      message: `The workout ${newWorkout.workoutName} has been created successfully`,
+      userId: userId
+    });
+    return result;
   }
 
   async findAll() {
@@ -41,38 +49,38 @@ export class WorkoutService {
       }
     });
   }
-  async getAllUserWorkoutFilteredBy(name : string, userId : number) {
+  async getAllUserWorkoutFilteredBy(name: string, userId: number) {
     return this.workoutRepository.find({
       relations: {
-        userExercises: {exercise : true},
+        userExercises: { exercise: true },
       },
-      where :
+      where:
       {
-        workoutName : ILike(`%${name}%`),
-        user : {userId : userId}
+        workoutName: ILike(`%${name}%`),
+        user: { userId: userId }
       }
-      
+
     });
   }
 
   async findOne(id: number) {
-    return this.workoutRepository.findOne({ where: { workoutId: id }, relations: {user : true, userExercises : true} }).catch(
+    return this.workoutRepository.findOne({ where: { workoutId: id }, relations: { user: true, userExercises: true } }).catch(
       () => {
-        const message : String =  `couldn't find workout with id : ${id}`;
+        const message: String = `couldn't find workout with id : ${id}`;
         this.logger.warn(message, this);
         return message;
       }
     );
   }
 
-  async updateWorkout(workout : Workout, updateWorkoutDto: Partial<UpdateWorkoutDto>) {
-    
-    if (updateWorkoutDto.userExercisesId){
+  async updateWorkout(workout: Workout, updateWorkoutDto: Partial<UpdateWorkoutDto>) {
+
+    if (updateWorkoutDto.userExercisesId) {
       updateWorkoutDto.userExercises = []
-      for (const userExerciseId of updateWorkoutDto.userExercisesId){
+      for (const userExerciseId of updateWorkoutDto.userExercisesId) {
         const userExercise: String | UserExercise = await this.userExerciseService.findOne(userExerciseId)
         if ((userExercise instanceof UserExercise)) {
-           updateWorkoutDto.userExercises.push(userExercise);
+          updateWorkoutDto.userExercises.push(userExercise);
         }
       }
     }
@@ -83,6 +91,6 @@ export class WorkoutService {
     return await this.workoutRepository.save(workout);
   }
   async deleteWorkout(id: number) {
-    return await this.workoutRepository.delete({workoutId : id})
+    return await this.workoutRepository.delete({ workoutId: id })
   }
 }
