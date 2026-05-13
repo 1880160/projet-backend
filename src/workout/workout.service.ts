@@ -36,6 +36,7 @@ export class WorkoutService {
     const newWorkout = this.workoutRepository.create(createWorkoutDto);
     const result = await this.workoutRepository.save(newWorkout);
     this.notificationService.createNotification({
+      title : "Workout created succesfully",
       message: `The workout ${newWorkout.workoutName} has been created successfully`,
       userId: userId
     });

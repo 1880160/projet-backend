@@ -32,6 +32,7 @@ export class ExercisesRequestService {
     const newRequestExercise = this.exerciseRequestRepository.create(newExerciseRequestDto);
     const result = await this.exerciseRequestRepository.save(newRequestExercise);
     this.notificationService.createNotification({
+      title : "Exercise Submitted",
       message: `Your exercise ${newRequestExercise.name} has been submitted for approval`,
       userId: newRequestExercise.user.userId
     })
@@ -100,6 +101,7 @@ export class ExercisesRequestService {
       category: exerciseRequest.category
     })
     this.notificationService.createNotification({
+      title : "Exercise approved",
       message: `Your exercise ${createdExercise.name} has been approved`,
       userId: exerciseRequest.user.userId
     })

@@ -1339,6 +1339,10 @@
       "CreateNotificationDto": {
         "type": "object",
         "properties": {
+          "title": {
+            "type": "string",
+            "description": "Notification's title"
+          },
           "message": {
             "type": "string",
             "description": "Notification's message"
@@ -1354,6 +1358,7 @@
           }
         },
         "required": [
+          "title",
           "message",
           "context",
           "userId"

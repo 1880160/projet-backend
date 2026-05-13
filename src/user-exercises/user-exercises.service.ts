@@ -39,6 +39,7 @@ export class UserExercisesService {
     const newUserExercise = await this.userExerciseRepository.create(createUserExerciseDto)
     const result = await this.userExerciseRepository.save(newUserExercise);
     this.notificationService.createNotification({
+      title : "Your Exercise has been created successfully",
       message: `The exercise ${createUserExerciseDto.name} has been created successfully`,
       userId: userId
     });

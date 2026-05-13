@@ -4,6 +4,14 @@ import { User } from "src/users/user/user.entity"
 
 export class CreateNotificationDto {
 
+
+    @ApiProperty({
+        description: "Notification's title"
+    })
+    @IsString()
+    @IsNotEmpty()
+    title: string
+
     @ApiProperty({
         description: "Notification's message"
     })
